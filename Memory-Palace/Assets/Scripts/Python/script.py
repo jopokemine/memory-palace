@@ -9,7 +9,7 @@ class Greeter:
         return self.name
     
     def RandomNumber(self, min, max):
-        return random.randint(min, max) + min
+        return random.randint(min, max)
     
     def PythonVersion(self):
         return sys.version_info
