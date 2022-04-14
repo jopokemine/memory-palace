@@ -24,13 +24,16 @@ def get_bluetooth_rssi() -> object:
     """
     rssi_vals = []
     btrssi = BluetoothRSSI(addr=request.json['addr'])
-    if btrssi is not None:
-        for _ in range(5):
-            rssi_vals.append(btrssi.request_rssi()[0])
-            time.sleep(0.2)
-        return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=average(rssi_vals))
-    else:
-        return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi="out of range")
+    for _ in range(5):
+        rssi_tuple = btrssi.request_rssi()
+        rssi_vals.append(
+            rssi_tuple[0] if rssi_tuple is not None else "not in range")
+        time.sleep(0.2)
+
+    rssi = "not in range" if rssi_vals.count(
+        "not in range") >= 3 else average(rssi_vals)
+
+    return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=rssi)
 
 
 if __name__ == '__main__':
