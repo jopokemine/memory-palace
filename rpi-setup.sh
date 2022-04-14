@@ -15,7 +15,7 @@ if [[ $(cat /etc/hostname) !=  "mem_pal_${ROOM}_${IDENTIFIER}" ]]; then
     do
         read -n 1 -p "\nThis script will change the hostname of this device, is this ok? [y/n]: " CONSENT
         if [[ $CONSENT == 'y' ]]; then
-            echo "mem_pal_${ROOM}_${IDENTIFIER}" > /etc/hostname
+            echo -e "mem_pal_${ROOM}_${IDENTIFIER}" > /etc/hostname
         elif [[ $CONSENT == 'n' ]]; then
             echo 1>&2 "Hostname must be changed for server to work correctly, aborting" && exit 1
         else
