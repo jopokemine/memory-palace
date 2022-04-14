@@ -12,14 +12,6 @@ UNIQUE_IDENTIFIER: int = "IDENTIFIER_HERE"
 
 
 def average(lst: list) -> float:
-    """Find the average value of a list of numbers
-
-    Args:
-        lst (list): The list of values to average
-
-    Returns:
-        float: The average of each item in the list
-    """
     return sum(lst) / len(lst)
 
 
@@ -32,10 +24,13 @@ def get_bluetooth_rssi() -> object:
     """
     rssi_vals = []
     btrssi = BluetoothRSSI(addr=request.json['addr'])
-    for _ in range(5):
-        rssi_vals.append(btrssi.request_rssi()[0])
-        time.sleep(0.2)
-    return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=average(rssi_vals))
+    if btrssi is not None:
+        for _ in range(5):
+            rssi_vals.append(btrssi.request_rssi()[0])
+            time.sleep(0.2)
+        return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=average(rssi_vals))
+    else:
+        return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi="out of range")
 
 
 if __name__ == '__main__':
