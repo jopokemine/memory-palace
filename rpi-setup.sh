@@ -10,7 +10,7 @@ read -n 3 -p "Give this device a unique identifier (max. 3 characters): " IDENTI
 
 echo -e "\nDevice is in room $ROOM with the identifier $IDENTIFIER"
 
-sed -i '' -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry-pi/server/app.py'
+sed -i .bak -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry-pi/server/app.py'
 
 apt-get install -y bluetooth libbluetooth-dev python-dev
 cd 'raspberry-pi'
