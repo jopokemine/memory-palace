@@ -9,17 +9,17 @@ fi
 read -p "What room will this device be in? " ROOM
 read -n 3 -p "Give this device a unique identifier (max. 3 characters): " IDENTIFIER
 
-echo -e "\n\nDevice is in room $ROOM with the identifier $IDENTIFIER"
+echo -e "\nDevice is in room $ROOM with the identifier $IDENTIFIER"
 
 sed -i.bak -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry-pi/server/app.py'
 
-echo -e '\nInstalling bluetooth libbluetooth-dev python-dev... '
+echo -ne 'Installing bluetooth libbluetooth-dev python-dev... '
 apt-get install -y bluetooth libbluetooth-dev python-dev > /dev/null && echo 'done'
 
 cd 'raspberry-pi'
-echo -e '\nInstalling PyBluez... '
+echo -ne 'Installing PyBluez... '
 pip install PyBluez > /dev/null && echo 'done'
-echo -e '\nRunning setup.py install... '
+echo -ne 'Running setup.py install... '
 python3 setup.py install > /dev/null && echo 'done'
 cd ..
 
