@@ -29,3 +29,4 @@ cp 'raspberry-pi/systemctl/rpi-bluetooth-server.service' '/etc/systemd/system'
 
 systemctl enable rpi-bluetooth-server.service
 systemctl start rpi-bluetooth-server.service
+echo 'Bluetooth server systemd service started'
