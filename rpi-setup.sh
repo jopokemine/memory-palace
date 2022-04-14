@@ -8,20 +8,14 @@ fi
 
 read -p "What room will this device be in? " ROOM
 read -n 3 -p "Give this device a unique identifier (max. 3 characters): " IDENTIFIER
+read -n 1 -p "\nThis script will change the hostname of this device, is this ok? [y/n]: " CONSENT
 
-if [[ $(cat /etc/hostname) !=  "mem_pal_${ROOM}_${IDENTIFIER}" ]]; then
-    CONSENT=''
-    until [[ $CONSENT == 'y' || $CONSENT == 'n' ]]
-    do
-        read -n 1 -p "\nThis script will change the hostname of this device, is this ok? [y/n]: " CONSENT
-        if [[ $CONSENT == 'y' ]]; then
-            echo -e "mem_pal_${ROOM}_${IDENTIFIER}" > /etc/hostname
-        elif [[ $CONSENT == 'n' ]]; then
-            echo 1>&2 "Hostname must be changed for server to work correctly, aborting" && exit 1
-        else
-            echo "Please enter y or n"
-        fi
-    done
+if [[ $CONSENT == 'y' ]]; then
+    echo -e "mem_pal_${ROOM}_${IDENTIFIER}" > /etc/hostname
+elif [[ $CONSENT == 'n' ]]; then
+    echo "Hostname must be changed for server to work correctly, aborting" 1>&2 && exit 1
+else
+    echo "Please enter y or n"
 fi
 
 echo -e "Device is in room $ROOM with the identifier $IDENTIFIER"
