@@ -9,4 +9,5 @@ sed -i '' -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry
 
 apt-get install -y bluetooth python-bluez
 
-python setup.py install
+cd raspberry-pi && python setup.py install
+cd ..
