@@ -1,6 +1,6 @@
 import sys
 import time
-from bluetooth import BluetoothRSSI
+from bt_proximity import BluetoothRSSI
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
