@@ -15,10 +15,10 @@ sed -i '' -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry
 apt-get install -y bluetooth libbluetooth-dev python-dev
 cd 'raspberry-pi'
 pip install PyBluez
-python setup.py install
+python3 setup.py install
 cd ..
 
-sed -i '' "s|PATH_TO_SERVER_FILE|$(pwd)/raspberry-pi/server/app.py|" 'raspberry-pi/systemctl/rpi-bluetooth-server.service'
+sed -i '' -e "s|PATH_TO_SERVER_FILE|$(pwd)/raspberry-pi/server/app.py|" 'raspberry-pi/systemctl/rpi-bluetooth-server.service'
 cp 'raspberry-pi/systemctl/rpi-bluetooth-server.service' '/etc/systemd/service'
 
 systemctl enable rpi-bluetooth-server.service
