@@ -45,5 +45,14 @@ sed -i.bak -e "s|PATH_TO_SERVER_FILE|$(pwd)/raspberry-pi/server/app.py|" 'raspbe
 cp 'raspberry-pi/systemctl/rpi-bluetooth-server.service' '/etc/systemd/system'
 
 systemctl enable rpi-bluetooth-server.service
-systemctl start rpi-bluetooth-server.service
-echo 'Bluetooth server systemd service started'
+
+read -n 1 -p 'Reboot required. Reboot now? [y/n]: ' REBOOT
+echo ''
+
+if [[ $REBOOT == 'y' ]]; then
+    echo 'Device will now reboot. Server will be started when reboot is complete.'
+    sleep 5
+    reboot now
+else
+    echo "Bluetooth server will not work as expected until reboot. Use 'sudo reboot now' to reboot the device."
+fi
