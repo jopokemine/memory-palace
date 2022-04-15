@@ -52,7 +52,7 @@ echo ''
 if [[ $REBOOT == 'y' ]]; then
     echo 'Device will now reboot. Server will be started when reboot is complete.'
     sleep 5
-    reboot now
+    reboot
 else
     echo "Bluetooth server will not work as expected until reboot. Use 'sudo reboot now' to reboot the device."
 fi
