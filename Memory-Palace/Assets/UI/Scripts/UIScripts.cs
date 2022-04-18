@@ -1,32 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using UnityEngine.Audio;
-
-namespace MemoryPalace.UI {
-    public class UIScripts : MonoBehaviour {
-
-        public void LoadScene(string sceneName) {
-            SceneManager.LoadScene(sceneName);
-        }
-    }
-
-    [RequireComponent(typeof (AudioSource))]
-    public class AudioVisualiser : MonoBehaviour {
-        AudioSource audioSource;
-        public void Start() {
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        public void Update() {
-            GetSpectrumAudioSource();
-        }
-
-        void GetSpectrumAudioSource() {
-            //
-        }
-    }
-}
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:08328f69c8a1b9f494735016ec0ea42fbf5c19cec85d04d6598c48baec47e789
+size 729

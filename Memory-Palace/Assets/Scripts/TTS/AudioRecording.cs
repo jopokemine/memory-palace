@@ -1,23 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
-
-namespace MemoryPalace.TTS {
-    [RequireComponent(typeof (AudioSource))]
-    public class AudioRecording : MonoBehaviour {
-        public void StartRecording() {
-            Debug.Log("Start Recording");
-            StartCoroutine(this.Recording(5f));
-        }
-
-        public IEnumerator Recording(float t) {
-            yield return new WaitForSeconds(t);
-            EndRecording();
-        }
-
-        public void EndRecording() {
-            Debug.Log("Finished Recording / Returned TTS");
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c0c4f515a8c35d8575fdeb25954f851e0e6ce46d1be7a774056318db608d49ae
+size 619
