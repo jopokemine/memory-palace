@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 read -p "What room will this device be in? " ROOM
-read -n 3 -p "Give this device a unique identifier (max. 3 characters): " IDENTIFIER
+read -n 3 -p "Unique identifier: " IDENTIFIER
 echo ''
 
 if [[ $(cat /etc/hostname) !=  "mem_pal_${ROOM}_${IDENTIFIER}" ]]; then
@@ -54,5 +54,5 @@ if [[ $REBOOT == 'y' ]]; then
     sleep 5
     reboot
 else
-    echo "Bluetooth server will not work as expected until reboot. Use 'sudo reboot now' to reboot the device."
+    echo "Bluetooth server will not work as expected until reboot. Use 'sudo reboot' to reboot the device."
 fi
