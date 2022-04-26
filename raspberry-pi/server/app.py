@@ -23,7 +23,7 @@ def get_bluetooth_rssi() -> object:
         object: A JSON object containing the name of the pi, and the rssi value
     """
     rssi_vals = []
-    btrssi = BluetoothRSSI(addr=request.json['addr'])
+    btrssi = BluetoothRSSI(addr=request.args['addr'])
     for _ in range(5):
         rssi_tuple = btrssi.request_rssi()
         rssi_vals.append(
