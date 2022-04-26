@@ -10,14 +10,17 @@ read -p "What room will this device be in? " ROOM
 read -n 3 -p "Unique identifier: " IDENTIFIER
 echo ''
 
-if [[ $(cat /etc/hostname) !=  "mem_pal_${ROOM}_${IDENTIFIER}" ]]; then
+NEW_HOSTNAME="mem-pal-${ROOM}_${IDENTIFIER}"
+
+if [[ $(cat /etc/hostname) !=  $NEW_HOSTNAME || $(cat /etc/hosts | grep 127.0.1.1 | cut -f 2) !=  $NEW_HOSTNAME ]]; then
     CONSENT=''
     until [[ $CONSENT == 'y' || $CONSENT == 'n' ]]
     do
         read -n 1 -p "This script will change the hostname of this device, is this ok? [y/n]: " CONSENT
         echo ''
         if [[ $CONSENT == 'y' ]]; then
-            echo -e "mem_pal_${ROOM}_${IDENTIFIER}" > /etc/hostname
+            echo -e "$NEW_HOSTNAME" > /etc/hostname
+            sed -i.bak -e "/127.0.1.1/c\127.0.1.1\t$NEW_HOSTNAME" /etc/hosts
         elif [[ $CONSENT == 'n' ]]; then
             echo "Hostname must be changed for server to work correctly, aborting" 1>&2 && exit 1
         else
@@ -27,6 +30,7 @@ if [[ $(cat /etc/hostname) !=  "mem_pal_${ROOM}_${IDENTIFIER}" ]]; then
 fi
 
 echo -e "Device is in room $ROOM with the identifier $IDENTIFIER"
+echo -e "The device will be renamed to $NEW_HOSTNAME"
 
 sed -i.bak -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry-pi/server/app.py'
 
