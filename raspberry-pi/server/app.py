@@ -31,7 +31,7 @@ def get_bluetooth_rssi() -> object:
         time.sleep(0.2)
 
     rssi = "not in range" if rssi_vals.count(
-        "not in range") >= 3 else average(rssi_vals)
+        "not in range") >= 3 else average([val for val in rssi_vals if val != "not in range"])
 
     return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=rssi)
 
