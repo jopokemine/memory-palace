@@ -10,7 +10,7 @@ namespace MemoryPalace.Util {
             StartCoroutine(ReqCoroutine(url, body, callback));
 
             IEnumerator ReqCoroutine(string url, string body, Action<string> callback = null) {
-                UnityWebRequest req = UnityWebRequest.Post(url,body);
+                UnityWebRequest req = UnityWebRequest.Put(url,body);
                 req.SetRequestHeader("Content-Type", "application/json");
                 yield return req.SendWebRequest();
 

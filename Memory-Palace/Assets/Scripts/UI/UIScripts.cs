@@ -20,10 +20,10 @@ namespace MemoryPalace.UI {
         }
 
         public void Request() {
-            req.GetRequest("http://127.0.0.1:5000/api/v1/textResponse", ResCallback);
+            req.PostRequest("http://127.0.0.1:5000/api/v1/textResponse", "{\"Name\":\"Kitchen\"}", ResCallback);
 
             void ResCallback(string data) {
-                Debug.Log(data);
+                Debug.Log($"UIScripts 26: {data}");
             }
         }
     }
