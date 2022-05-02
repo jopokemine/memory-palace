@@ -15,7 +15,7 @@ def average(lst: list) -> float:
     return sum(lst) / len(lst)
 
 
-@app.route('/bluetooth/rssi', methods=['GET'])
+@app.route('/api/v1/bluetooth/rssi', methods=['GET'])
 def get_bluetooth_rssi() -> object:
     """Receive a HTTP get request, find the rssi for the mac address provided, and return the rssi value
 
