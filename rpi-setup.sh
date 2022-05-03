@@ -10,7 +10,7 @@ read -p "What room will this device be in? " ROOM
 read -n 3 -p "Unique identifier: " IDENTIFIER
 echo ''
 
-NEW_HOSTNAME="mem-pal-${ROOM}_${IDENTIFIER}"
+NEW_HOSTNAME="mem-pal-${ROOM}-${IDENTIFIER}"
 
 if [[ $(cat /etc/hostname) !=  $NEW_HOSTNAME || $(cat /etc/hosts | grep 127.0.1.1 | cut -f 2) !=  $NEW_HOSTNAME ]]; then
     CONSENT=''
