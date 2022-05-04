@@ -6,41 +6,30 @@ using UnityEngine.Networking;
 
 namespace MemoryPalace.Util {
     public class Request : MonoBehaviour {
+        public void GetRequest(string url, Action<string> callback) {
+            UnityWebRequest req = UnityWebRequest.Get(url);
+            StartCoroutine(ReqCoroutine(req, callback));
+        }
+
         public void PostRequest(string url, string body, Action<string> callback) { // Create New
-            StartCoroutine(ReqCoroutine(url, body, callback));
+            UnityWebRequest req = UnityWebRequest.Post(url, body);
+            StartCoroutine(ReqCoroutine(req, callback));
+        }
 
-            IEnumerator ReqCoroutine(string url, string body, Action<string> callback = null) {
-                UnityWebRequest req = UnityWebRequest.Put(url,body);
-                req.SetRequestHeader("Content-Type", "application/json");
-                yield return req.SendWebRequest();
+        IEnumerator ReqCoroutine(UnityWebRequest req, Action<string> callback = null) {
+            // req.SetRequestHeader("Content-Type", "application/json");
+            yield return req.SendWebRequest();
 
-                if(req.result !=UnityWebRequest.Result.Success) {
-                    Debug.Log(req.error);
-                } else {
-                    if(callback != null) callback(req.downloadHandler.text);
-                }
+            if(req.result != UnityWebRequest.Result.Success) {
+                Debug.Log(req.error);
+            } else {
+                if(callback != null) callback(req.downloadHandler.text);
             }
         }
 
         // public static IEnumerator PutRequest(string url, string body) { // Update Existing
 
         // }
-
-        public void GetRequest(string url, Action<string> callback) {
-            StartCoroutine(ReqCoroutine(url, callback));
-
-            IEnumerator ReqCoroutine(string url, Action<string> callback = null) {
-                UnityWebRequest req = UnityWebRequest.Get(url);
-                yield return req.SendWebRequest();
-
-                if(req.result != UnityWebRequest.Result.Success) {
-                    Debug.Log(req.error);
-                } else {
-                    // string data = req.downloadHandler.text;
-                    if(callback != null) callback(req.downloadHandler.text);
-                }
-            }
-        }
 
         public static IEnumerator DeleteRequest(string url, string itemLocation) {
             UnityWebRequest req = UnityWebRequest.Delete($"{url}/{itemLocation}");
