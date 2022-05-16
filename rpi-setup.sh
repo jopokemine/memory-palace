@@ -35,11 +35,11 @@ echo -e "The device will be renamed to $NEW_HOSTNAME"
 sed -i.bak -e "s/ROOM_HERE/$ROOM/" -e "s/IDENTIFIER_HERE/$IDENTIFIER/" 'raspberry-pi/server/app.py'
 
 echo -ne 'Installing bluetooth libbluetooth-dev python-dev... '
-apt-get install -y bluetooth libbluetooth-dev python-dev > /dev/null && echo 'done'
+apt-get install -y bluetooth libbluetooth-dev python-dev pip > /dev/null && echo 'done'
 
 cd 'raspberry-pi'
-echo -ne 'Installing PyBluez... '
-pip install PyBluez > /dev/null && echo 'done'
+echo -ne 'Installing PyBluez setuptools... '
+pip3 install PyBluez flask > /dev/null && echo 'done'
 echo -ne 'Running setup.py install... '
 python3 setup.py install > /dev/null && echo 'done'
 cd ..
