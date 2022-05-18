@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/RoomBuilder.unity
+    guid: 2e3ffbd5b52d2764fb4ab52dc8e2f17a
   m_configObjects: {}
