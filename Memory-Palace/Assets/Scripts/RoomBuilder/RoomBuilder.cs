@@ -38,6 +38,7 @@ namespace MemoryPalace.RoomBuilder {
         }
 
         void DragToMakeRoom() {
+            // First point when mouse/touch starts, user drags and then finishing point, when they remove is second point
             if(Input.GetMouseButtonDown(0)) {
                 a = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
             }
@@ -52,7 +53,7 @@ namespace MemoryPalace.RoomBuilder {
         }
 
         public void EnableDragToMakeRoom() {
-            Invoke("CanCreateDragTrue", 1.5f);
+            Invoke("CanCreateDragTrue", 0.25f);
         }
 
         void CanCreateDragTrue() {
@@ -72,50 +73,35 @@ namespace MemoryPalace.RoomBuilder {
         void SetupNewRoom(GameObject room, Vector2 midPoint, Vector2 dimensions, int index) {
             // cache components
             Room roomScript = room.GetComponent<Room>();
-            Button resizeButton = room.transform.Find("ResizeButton").GetComponent<Button>();
             Button deleteButton = room.transform.Find("DeleteButton").GetComponent<Button>();
-            RectTransform rect = room.GetComponent<RectTransform>();
 
             // Set place in hierarchy
-            room.transform.SetParent(roomsBase);
+            roomScript.SetParent(roomsBase);
 
             // Set sizing and positioning
-            room.transform.position = midPoint;
-            // These two lines are to undo the automatic scaling of the UI from the canvas, which makes the resizeButton huge and the room tiny
+            // room.transform.position = midPoint;
+            roomScript.UpdatePosition(midPoint);
+            // This line undoes the automatic scaling of the UI from the canvas, which makes the resizeButton huge and the room tiny. The local scale is set to 1 inside the room
             // This happens because parent transform modifications cascade down the object hierarchy
-            rect.localScale = new Vector3(1,1,1);
             dimensions *= scale;
-            // Set minimum Room size, that being 100 for 0.5metre room
-            if(dimensions.x < 100) {
-                dimensions.x = 100;
-            }
-            if(dimensions.y < 100) {
-                dimensions.y = 100;
-            }
-            // dimensions +50 so we have 25px wall size
-            dimensions = new Vector2((dimensions.x+50) - (dimensions.x % 100), (dimensions.y+50) - (dimensions.y % 100));
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, dimensions.x);
-            rect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dimensions.y);
+            // Clamp size between minimum (.5m 100px) and maximum (10m 2000px)
+            dimensions.x = Mathf.Clamp(dimensions.x, 100, 2000);
+            dimensions.y = Mathf.Clamp(dimensions.y, 100, 2000);
+            // dimensions +40 so we have 20px wall size
+            dimensions = new Vector2((dimensions.x - (dimensions.x % 100)) + 40, (dimensions.y - (dimensions.y % 100)) + 40);
+            roomScript.UpdateSize((dimensions.x-40)/100,( dimensions.y-40)/100);
+            roomScript.SetUISize(dimensions);
 
-            // Define room qualities, such as name, id and internal values of width and height
-            room.name = $"Room-{index}";
+            // Define room qualities, such as name, id
+            // BUG: room.name gets flushed when roomScript.name is set
             roomScript.id = index;
-            roomScript.name = roomDataName.textComponent.text;
-            roomScript.description = roomDataDescription.textComponent.text;
+            roomScript.SetupRoomText(roomDataName.textComponent.text, roomDataDescription.textComponent.text);
             ClearRoomInfoForm();
-            roomScript.SetupDimensions(dimensions.y/100, dimensions.x/100);
 
             // Move buttons to correct locations and add functionality
-            SetupRoomButtons(dimensions, resizeButton, deleteButton, index);
-        }
-
-        void SetupRoomButtons(Vector2 dimensions, Button resizeButton, Button deleteButton, int index) {
-            // Move rezize button to bottom right and delete button to bottom left
-            resizeButton.transform.localPosition += new Vector3(dimensions.x * 0.5f, -(dimensions.y * 0.5f), 0);
-            deleteButton.transform.localPosition += new Vector3(-(dimensions.x * 0.5f), -(dimensions.y * 0.5f), 0);
-            // Setup Button functionality so they're pointed at the correct GameObject
+            roomScript.UpdateDeleteButtonPosition();
             deleteButton.onClick.AddListener(() => DeleteRoom(index));
-            // TODO: Setup Resize Button, perhaps give UI when clicking on room to specify size numerically?
+            roomScript.SetupContextMenuButton();
         }
 
         void DeleteRoom(int index) {
@@ -129,4 +115,3 @@ namespace MemoryPalace.RoomBuilder {
         }
     }
 }
-

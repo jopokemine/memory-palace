@@ -30,21 +30,5 @@ namespace MemoryPalace.UI {
             }
         }
     }
-
-    [RequireComponent(typeof (AudioSource))]
-    public class AudioVisualiser : MonoBehaviour {
-        AudioSource audioSource;
-        public void Start() {
-            audioSource = GetComponent<AudioSource>();
-        }
-
-        public void Update() {
-            GetSpectrumAudioSource();
-        }
-
-        void GetSpectrumAudioSource() {
-            //
-        }
-    }
 }
 
