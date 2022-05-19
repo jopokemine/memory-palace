@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 namespace MemoryPalace.RoomBuilder {
     public class DimensionsFormButtons : MonoBehaviour {
-        // Start is called before the first frame update
         public InputField widthInput;
         public InputField heightInput;
 
