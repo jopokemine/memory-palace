@@ -8,17 +8,31 @@ namespace MemoryPalace.Bluetooth
     {
         string room;
         float x, y, rssi;
-        public BluetoothDevice(string room, float x, float y, float rssi)
+
+        public BluetoothDevice(string name, float x, float y, float rssi)
         {
-            this.room = room;
+            this.name = name;
             this.x = x;
             this.y = y;
             this.rssi = rssi;
         }
 
+        public BluetoothDevice(string name, float x, float y)
+        {
+            this.name = name;
+            this.x = x;
+            this.y = y;
+            this.rssi = float.NaN;
+        }
+
+        public static string GetName()
+        {
+            return this.name;
+        }
+
         public static string GetRoom()
         {
-            return this.room;
+            return this.name.Split('-')[2];  // Based on name being 'mem-pal-{ROOM}-{IDENTIFIER}'
         }
 
         public static float[] GetCoords()
@@ -41,10 +55,17 @@ namespace MemoryPalace.Bluetooth
             return this.rssi;
         }
 
+        public static void SetRssi(float rssi)
+        {
+            this.rssi = rssi;
+        }
+
         public static float GetDist()
         {
             // TODO: Figure out how to turn rssi val to distance
-            return this.rssi;
+            float measuredPower = -69; // TODO: Find out actual power
+            int N = 2; // TODO: Find out actual value (environmental factor)
+            return Math.Pow(10, (measuredPower - this.rssi) / (10 * N));
         }
     }
 }
