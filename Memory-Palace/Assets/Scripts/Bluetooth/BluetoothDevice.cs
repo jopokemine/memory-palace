@@ -6,66 +6,86 @@ namespace MemoryPalace.Bluetooth
 {
     public class BluetoothDevice : MonoBehaviour
     {
-        string room;
-        float x, y, rssi;
+        private string deviceName, room;
+        private float x, y, rssi;
 
-        public BluetoothDevice(string name, float x, float y, float rssi)
+        public BluetoothDevice(string deviceName, float x, float y, float rssi)
         {
-            this.name = name;
+            this.deviceName = deviceName;
             this.x = x;
             this.y = y;
             this.rssi = rssi;
         }
 
-        public BluetoothDevice(string name, float x, float y)
+        public BluetoothDevice(string deviceName, float x, float y)
         {
-            this.name = name;
+            this.deviceName = deviceName;
             this.x = x;
             this.y = y;
             this.rssi = float.NaN;
         }
 
-        public static string GetName()
+        public string Name
         {
-            return this.name;
+            get
+            {
+                return deviceName;
+            }
         }
 
-        public static string GetRoom()
+        public string Room
         {
-            return this.name.Split('-')[2];  // Based on name being 'mem-pal-{ROOM}-{IDENTIFIER}'
+            get
+            {
+                return deviceName.Split('-')[2];  // Based on deviceName being 'mem-pal-{ROOM}-{IDENTIFIER}'
+            }
         }
 
-        public static float[] GetCoords()
+        public Vector2 Coords
         {
-            return new float[this.x, this.y];
+            get
+            {
+                return new Vector2(x, y);
+            }
         }
 
-        public static float GetX()
+        public float X
         {
-            return this.x;
+            get
+            {
+                return x;
+            }
         }
 
-        public static float GetY()
+        public float Y
         {
-            return this.y;
+            get
+            {
+                return y;
+            }
         }
 
-        public static float GetRssi()
+        public float Rssi
         {
-            return this.rssi;
+            get
+            {
+                return rssi;
+            }
+            set
+            {
+                rssi = value;
+            }
         }
 
-        public static void SetRssi(float rssi)
+        public float Distance
         {
-            this.rssi = rssi;
-        }
-
-        public static float GetDist()
-        {
-            // TODO: Figure out how to turn rssi val to distance
-            float measuredPower = -69; // TODO: Find out actual power
-            int N = 2; // TODO: Find out actual value (environmental factor)
-            return Math.Pow(10, (measuredPower - this.rssi) / (10 * N));
+            get
+            {
+                // TODO: Figure out how to turn rssi val to distance
+                float measuredPower = -69; // TODO: Find out actual power
+                int N = 2; // TODO: Find out actual value (environmental factor)
+                return Mathf.Pow(10, (measuredPower - rssi) / (10 * N));
+            }
         }
     }
 }
