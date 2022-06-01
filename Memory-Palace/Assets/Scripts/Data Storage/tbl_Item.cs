@@ -93,6 +93,22 @@ namespace DataBank {
             		return base.getAllData(TABLE_NAME);
         	}
 
+			public IDataReader getItemsInRoom(string room_name)
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"SELECT item_name, storage_name FROM "
+				+ TABLE_NAME
+				+"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
+				+ TABLE_NAME
+				+".storage_id "
+				+"INNER JOIN tbl_Room on tbl_Room.room_id = "
+				+"tbl_Storage_Location.room_id;";
+
+				dbcmd.CommandText = query;
+				return dbcmd.ExecuteReader();
+			}
+
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {
