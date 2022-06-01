@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
+using System.Globalization;
 using MemoryPalace.Util;
 using DM = MemoryPalace.Util.DataManipulation;
 
-namespace MemoryPalace.Bluetooth
+namespace MemoryPalace.BluetoothFunctions
 {
     public class Bluetooth : MonoBehaviour
     {
@@ -13,26 +15,26 @@ namespace MemoryPalace.Bluetooth
         // Start is called before the first frame update
         void Start()
         {
-            req = GameObject.Find("Utilities").GetComponent<Request>();
+            req = GameObject.Find("Requests").GetComponent<Request>();
         }
 
-        public (string, float, float) GetUserPos()
+        public KeyValuePair<string, Vector2> GetUserPos()
         {
             BluetoothDevice[] devices = GetBluetoothDevices();
             GetRssiValues(ref devices);
             string room = GetCurrentRoomByBTStrength(devices);
-            float[] userCoords = TriangulateUserPos(GetBluetoothDevicesFromRoom(room));
-            Debug.Log($"room: {room}, x: {userCoords[0]}, y: {userCoords[1]}");
-            return (room, userCoords[0], userCoords[1]);
+            Vector2 userCoords = TriangulateUserPos(GetBluetoothDevicesFromRoom(room));
+            Debug.Log($"room: {room}, x: {userCoords.x}, y: {userCoords.y}");
+            return new KeyValuePair<string, Vector2>(room, userCoords);
         }
 
         BluetoothDevice[] GetBluetoothDevices()
         {
             // TODO Implement this once data storage is completed
             return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-cok", 5.0f, 5.0f, 2.0f),
-                new BluetoothDevice("mem-pal-kitchen-cok", 1.0f, 7.0f, 4.0f)
+                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f),
+                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f),
+                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f)
             };
         }
 
@@ -40,12 +42,11 @@ namespace MemoryPalace.Bluetooth
         {
             // TODO: Implement this once data storage is completed
             return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-cok", 5.0f, 5.0f, 2.0f),
-                new BluetoothDevice("mem-pal-kitchen-cok", 1.0f, 7.0f, 4.0f)
+                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f),
+                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f),
+                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f)
             };
         }
-
         void GetRssiValues(ref BluetoothDevice[] bluetoothDevices)
         {
             foreach (BluetoothDevice device in bluetoothDevices)
@@ -53,9 +54,8 @@ namespace MemoryPalace.Bluetooth
                 req.GetRequest($"http://{device.Name}.local:5000/api/v1/bluetooth/rssi?addr={GetBluetoothMACAddress()}", ResCallback);
                 void ResCallback(string data)
                 {
-                    Debug.Log($"data: {data}");
-                    // TODO get device and rssi from data
-                    device.Rssi = 5.0f;
+                    Debug.Log($"device: {device.Name}, data: {data}");
+                    device.Rssi = float.Parse(data, CultureInfo.InvariantCulture.NumberFormat);
                 }
             }
         }
@@ -94,33 +94,34 @@ namespace MemoryPalace.Bluetooth
         string GetBluetoothMACAddress()
         {
             // TODO Imlpement function to get BT MAC address for device
-            return "74:65:0C:DC:9F:94";
+            // return "74:65:0C:DC:9F:94";
+            return "D8:55:75:35:68:07";
         }
 
-        BluetoothDevice[] GetStrongestThreeDevices(BluetoothDevice[] bluetoothDevices)
-        {
-            return (BluetoothDevice[])(from i in bluetoothDevices
-                    orderby i.Rssi descending
-                    select i).Take(3);
-        }
+        // BluetoothDevice[] GetStrongestThreeDevices(BluetoothDevice[] bluetoothDevices)
+        // {
+        //     return (BluetoothDevice[])(from i in bluetoothDevices
+        //             orderby i.Rssi descending
+        //             select i).Take(3);
+        // }
 
-        float[] TriangulateUserPos(BluetoothDevice[] bluetoothDevices)
+        Vector2 TriangulateUserPos(BluetoothDevice[] bluetoothDevices)
         {
             if (bluetoothDevices.Length == 1)
             {
-                return new float[2]{0f, 0f};  // TODO: Figure out what this should return if only one BT device
+                return new Vector2(0f, 0f);  // TODO: Figure out what this should return if only one BT device
             }
             else if (bluetoothDevices.Length == 2)
             {
-                return new float[2]{0f, 0f};  // TODO: Figure out how to find the two points the user could be in, and return
+                return new Vector2(0f, 0f);  // TODO: Figure out how to find the two points the user could be in, and return
                 // Or just return same as above
             }
             else
             {
-                BluetoothDevice[] devices = GetStrongestThreeDevices(bluetoothDevices);
-                BluetoothDevice blue1 = devices[0];
-                BluetoothDevice blue2 = devices[1];
-                BluetoothDevice blue3 = devices[2];
+                // BluetoothDevice[] devices = GetStrongestThreeDevices(bluetoothDevices);
+                BluetoothDevice blue1 = bluetoothDevices[0];
+                BluetoothDevice blue2 = bluetoothDevices[1];
+                BluetoothDevice blue3 = bluetoothDevices[2];
 
                 float x1 = -2 * blue1.X;
                 float y1 = -2 * blue1.Y;
@@ -155,7 +156,7 @@ namespace MemoryPalace.Bluetooth
                 userX *= invFrac;
                 userY *= invFrac;
 
-                return new float[2]{userX, userY};
+                return new Vector2(userX, userY);
 
                 // I assume this maps to a grid where 0,1 is 1m away from 0,0
                 // If this is the case, userX and userY need to be doubled to match the 0.5m scale

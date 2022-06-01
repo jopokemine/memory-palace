@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MemoryPalace.Bluetooth
+namespace MemoryPalace.BluetoothFunctions
 {
-    public class BluetoothDevice : MonoBehaviour
+    public class BluetoothDevice
     {
         private string deviceName, room;
         private float x, y, rssi;
