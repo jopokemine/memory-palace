@@ -32,9 +32,9 @@ namespace MemoryPalace.BluetoothFunctions
         {
             // TODO Implement this once data storage is completed
             return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f)
+                new BluetoothDevice("mem-pal-kitchen-abc", 2.0f, 5.0f, 2.6f),
+                new BluetoothDevice("mem-pal-kitchen-amf", 5.0f, 5.0f, 1.2f),
+                new BluetoothDevice("mem-pal-kitchen-grd", 1.0f, 7.0f, 9.7f)
             };
         }
 
@@ -42,9 +42,9 @@ namespace MemoryPalace.BluetoothFunctions
         {
             // TODO: Implement this once data storage is completed
             return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f),
-                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f)
+                new BluetoothDevice("mem-pal-kitchen-abc", 2.0f, 5.0f, 2.6f),
+                new BluetoothDevice("mem-pal-kitchen-amf", 5.0f, 5.0f, 1.2f),
+                new BluetoothDevice("mem-pal-kitchen-grd", 1.0f, 7.0f, 9.7f)
             };
         }
         void GetRssiValues(ref BluetoothDevice[] bluetoothDevices)
