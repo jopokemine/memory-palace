@@ -17,6 +17,15 @@ namespace MemoryPalace.BluetoothFunctions
             this.rssi = rssi;
         }
 
+        public BluetoothDevice(string deviceName, string roomName, float x, float y, float rssi)
+        {
+            this.deviceName = deviceName;
+            this.room = roomName;
+            this.x = x;
+            this.y = y;
+            this.rssi = rssi;
+        }
+
         public BluetoothDevice(string deviceName, float x, float y)
         {
             this.deviceName = deviceName;
@@ -37,7 +46,11 @@ namespace MemoryPalace.BluetoothFunctions
         {
             get
             {
-                return deviceName.Split('-')[2];  // Based on deviceName being 'mem-pal-{ROOM}-{IDENTIFIER}'
+                return room;
+            }
+            set
+            {
+                room = value;
             }
         }
 

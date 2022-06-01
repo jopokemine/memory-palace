@@ -40,7 +40,6 @@ namespace MemoryPalace.Tracking
             float hyp = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.y, 2));
             float angleInRads = Mathf.Acos(adj / hyp);
             return 90 - angleInRads * (180 / Mathf.PI);
-            // TODO: Think about user angle
         }
 
         float GetRoomMagneticNorthAngle()

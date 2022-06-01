@@ -5,6 +5,7 @@ using System.Threading;
 using UnityEngine;
 using System.Globalization;
 using MemoryPalace.Util;
+using DataBank;
 using DM = MemoryPalace.Util.DataManipulation;
 
 namespace MemoryPalace.BluetoothFunctions
@@ -15,6 +16,7 @@ namespace MemoryPalace.BluetoothFunctions
         // Start is called before the first frame update
         void Start()
         {
+            BluetoothDevices btd = new BluetoothDevices();
             req = GameObject.Find("Requests").GetComponent<Request>();
         }
 
@@ -23,29 +25,35 @@ namespace MemoryPalace.BluetoothFunctions
             BluetoothDevice[] devices = GetBluetoothDevices();
             GetRssiValues(ref devices);
             string room = GetCurrentRoomByBTStrength(devices);
-            Vector2 userCoords = TriangulateUserPos(GetBluetoothDevicesFromRoom(room));
+            Vector2 userCoords = TriangulateUserPos(GetBluetoothDevicesFromRoom(devices, room));
             Debug.Log($"room: {room}, x: {userCoords.x}, y: {userCoords.y}");
             return new KeyValuePair<string, Vector2>(room, userCoords);
         }
 
         BluetoothDevice[] GetBluetoothDevices()
         {
-            // TODO Implement this once data storage is completed
-            return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
-                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
-                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
-            };
+            List<string[]> deviceQuery = btd.getBluetoothDevices();
+            BluetoothDevice[] devices = new BluetoothDevice[]{};
+            foreach (string[] entry in deviceQuery)
+            {
+                BluetoothDevice.Add(new BluetoothDevice(entry[3], entry[4], (float)entry[1], (float)entry[2]))
+            }
+            return devices;
+            // return new BluetoothDevice[] {
+            //     new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
+            //     new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
+            //     new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
+            // };
         }
 
-        BluetoothDevice[] GetBluetoothDevicesFromRoom(string room)
+        BluetoothDevice[] GetBluetoothDevicesFromRoom(BluetoothDevice[] devices, string room)
         {
-            // TODO: Implement this once data storage is completed
-            return new BluetoothDevice[] {
-                new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
-                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
-                new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
-            };
+            return devices.Where(device => device.Room == room).ToArray();
+            // return new BluetoothDevice[] {
+            //     new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
+            //     new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
+            //     new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
+            // };
         }
         void GetRssiValues(ref BluetoothDevice[] bluetoothDevices)
         {
