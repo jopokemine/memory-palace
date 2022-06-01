@@ -121,7 +121,6 @@ namespace DataBank {
 				return dbcmd.ExecuteReader();
 			}
 
-
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {
             // 		Debug.Log(Tag + "Getting nearest centoid from: "
