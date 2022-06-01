@@ -11,10 +11,10 @@ namespace DataBank
             
         }
 
-        public List<string[]> getItemsInRoom ()
+        public List<string[]> getItemsInRoom (string room_name)
         {
             tbl_Item item = new tbl_Item();
-            System.Data.IDataReader reader = item.getItemsInRoom();
+            System.Data.IDataReader reader = item.getItemsInRoom(room_name);
 
             int fieldCount = reader.FieldCount;
 		    List<string[]> myList = new List<string[]>();
