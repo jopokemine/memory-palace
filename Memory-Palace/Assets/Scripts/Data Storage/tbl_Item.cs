@@ -109,6 +109,17 @@ namespace DataBank {
 				return dbcmd.ExecuteReader();
 			}
 
+			public IDataReader getItems()
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"SELECT item_name FROM "
+				+ TABLE_NAME
+				+";";
+
+				dbcmd.CommandText = query;
+				return dbcmd.ExecuteReader();
+			}
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {
