@@ -13,7 +13,7 @@ namespace DataBank{
         	private const String DEVICE_ID = "device_id";
         	private const String POS_X = "pos_x";
         	private const String POS_Y = "pos_y";
-            private const String DEVICE_NAME = "room_name";
+            private const String DEVICE_NAME = "device_name";
             private const String ROOM_ID = "room_id";
         	private String[] COLUMNS = new String[] {DEVICE_ID, POS_X, POS_Y, DEVICE_NAME, ROOM_ID};
 
@@ -92,6 +92,20 @@ namespace DataBank{
         	{
             		return base.getAllData(TABLE_NAME);
         	}
+
+			public IDataReader getBluetoothDevices()
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"SELECT device_id, " + TABLE_NAME +".pos_x, " + TABLE_NAME + ".pos_y, device_name, room_name FROM "
+				+ TABLE_NAME
+				+" INNER JOIN tbl_Room on tbl_Room.room_id = "
+				+ TABLE_NAME
+				+".room_id;";
+
+				dbcmd.CommandText = query;
+				return dbcmd.ExecuteReader();
+			}
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {
