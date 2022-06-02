@@ -5,11 +5,17 @@ using MemoryPalace.DataTypes;
 
 namespace MemoryPalace.DataTypes {
     public class StorageLocation {
+        int id;
         string name;
         List<Item> items;
-        public StorageLocation(string _name, List<Item> _items) {
+        public StorageLocation(string _name, int id, List<Item> _items) {
+            this.id = _id;
             this.name = _name;
             this.items = _items;
+        }
+
+        public int GetID() {
+            return this.id;
         }
 
         public string GetName() {
