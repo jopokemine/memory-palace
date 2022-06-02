@@ -97,7 +97,7 @@ namespace DataBank {
 			{
 				IDbCommand dbcmd = getDbCommand();
 				string query = 
-				"SELECT item_name, storage_name FROM "
+				"SELECT item_name, storage_name, item_id, storage_id FROM "
 				+ TABLE_NAME
 				+"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
 				+ TABLE_NAME

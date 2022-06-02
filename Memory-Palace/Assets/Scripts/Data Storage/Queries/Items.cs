@@ -18,7 +18,9 @@ namespace DataBank
 		    {
                 string[] entity = {
                     reader[0].ToString(), 
-                    reader[1].ToString()
+                    reader[1].ToString(),
+                    reader[2].ToString(),
+                    reader[3].ToString() 
                 };
                 myList.Add(entity);
 		    }
