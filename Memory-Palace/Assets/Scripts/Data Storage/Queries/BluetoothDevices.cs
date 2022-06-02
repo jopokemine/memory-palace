@@ -6,11 +6,6 @@ namespace DataBank
 {
     public class BluetoothDevices : MonoBehaviour
     {
-        public BluetoothDevices()
-        {
-            
-        }
-
         public List<string[]> getBluetoothDevices ()
         {
             tbl_Bluetooth_Device btd = new tbl_Bluetooth_Device();
@@ -31,6 +26,13 @@ namespace DataBank
 		    }
             btd.close();
             return myList;
+        }
+
+        public void addBluetoothDevice (string x, string y, string device_name, string room_id)
+        {
+            tbl_Bluetooth_Device btd = new tbl_Bluetooth_Device();
+            btd.addData(new BluetoothDeviceEntity("NULL", x, y, device_name, room_id));
+            btd.close();
         }
     }
 }

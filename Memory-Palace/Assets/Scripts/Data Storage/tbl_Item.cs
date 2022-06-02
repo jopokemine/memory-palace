@@ -97,13 +97,14 @@ namespace DataBank {
 			{
 				IDbCommand dbcmd = getDbCommand();
 				string query = 
-				"SELECT item_name, storage_name FROM "
+				"SELECT item_name, storage_name, item_id, storage_id FROM "
 				+ TABLE_NAME
-				+"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
+				+" INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
 				+ TABLE_NAME
 				+".storage_id "
 				+"INNER JOIN tbl_Room on tbl_Room.room_id = "
-				+"tbl_Storage_Location.room_id;";
+				+"tbl_Storage_Location.room_id "
+				+"WHERE tbl_Room.room_name = " + room_name + ";";
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
@@ -151,6 +152,21 @@ namespace DataBank {
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
+			}
+    
+			public void updateItemName (string id, string new_name)
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"UPDATE "
+				+ TABLE_NAME
+				+" SET item_name = "
+				+ new_name
+				+" WHERE item_id = "
+				+ id
+				+";";
+				
+				dbcmd.CommandText = query;
 			}
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
