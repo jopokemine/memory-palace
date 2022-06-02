@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DataBank;
 
-namespace MemoryPalace
+namespace DataBank
 {
     public class StorageLocations : MonoBehaviour
     {
         public void addStorageLocation (string storage_name, string x, string y, string room_id)
         {
             tbl_Storage_Location storage_location = new tbl_Storage_Location();
-            storage_location.addData(new StorageLocationEntity("NULL", storage_name, x, t, room_id));
+            storage_location.addData(new StorageLocationEntity("NULL", storage_name, x, y, room_id));
             storage_location.close();
         }
 

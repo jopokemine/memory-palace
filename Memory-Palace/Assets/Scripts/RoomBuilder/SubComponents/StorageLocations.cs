@@ -6,12 +6,12 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using MemoryPalace.DataTypes;
 using ItemDB = DataBank.Items;
-// using StorageDB = DataBank.StorageLocations;
+using StorageDB = DataBank.StorageLocations;
 
 namespace MemoryPalace.RoomBuilder {
     public class StorageLocations : MonoBehaviour {
         ItemDB itemDB;
-        // StorageDB storageDB;
+        StorageDB storageDB;
         // Dummy Values
         int locationIndex = 0;
         int itemIndex = 0;
@@ -44,7 +44,7 @@ namespace MemoryPalace.RoomBuilder {
         
 
         void Awake() {
-            // storageDB = new StorageDB();
+            storageDB = new StorageDB();
             itemDB = new ItemDB();
             // Put it in the middle, irrespective of where the room itself is
             gameObject.transform.position = gameObject.transform.parent.parent.position;
@@ -192,7 +192,7 @@ namespace MemoryPalace.RoomBuilder {
 
         public void UpdateStorageLocation() {
             if(!string.IsNullOrEmpty(storageName.text)) {
-                locations[locationIndex] = new StorageLocation(storageName.text, locations[locationIndex].GetItems());
+                locations[locationIndex] = new StorageLocation(storageName.text, locations[locationIndex].GetItems(), locations[locationIndex].GetID());
                 PopulateStorageLocationsDropdown(locations);
                 storageLocationDropdown.value = ++locationIndex;
                 return;
@@ -251,13 +251,13 @@ namespace MemoryPalace.RoomBuilder {
                     }
                 }
                 if(found == -1) {
-                    locations.Add(new StorageLocation(item[1], (int)item[3], new List<Item>()));
-                    locations[locations.Count-1].AddItem(new Item(item[0], (int)item[2]));
+                    locations.Add(new StorageLocation(item[1], new List<Item>(), int.Parse(item[3])));
+                    locations[locations.Count-1].AddItem(new Item(item[0], int.Parse(item[2])));
                 } else {
                     locations[found].AddItem(new Item(item[0]));
                 }
-                storageIDs.Add(item[3]);
-                itemIDs.Add(item[2]);
+                storageIDs.Add(int.Parse(item[3]));
+                itemIDs.Add(int.Parse(item[2]));
                 // item[0] is the item name, item[2] is item id
                 // item[1] is the storage location name, item[3] is storage id
             }
@@ -270,21 +270,22 @@ namespace MemoryPalace.RoomBuilder {
             // public void addItem (string item_name, string x, string y, string storage_id)
             // Filter out all of the deleted entries
             foreach(int id in storageIDs) {
-                StorageLocation loc = locations.Where(x => x.GetID == id) || null;
-                if(loc != null)
+
+                // StorageLocation loc = locations.Where(x => x.GetID() == id) || null;
+                // if(loc != null)
             }
             // Update or add all the non deleted ones
             foreach(StorageLocation location in locations) {
                 if(!storageIDs.Contains(location.GetID())) {
                     storageDB.addStorageLocation(location.GetName(), "0", "0", "0");
                 } else {
-                    storageDB.updateStorageLocation((string)location.GetID(), location.GetName());
+                    storageDB.updateStorageLocation(location.GetID().ToString(), location.GetName());
                 }
                 foreach(Item item in location.GetItems()) {
                     if(!itemIDs.Contains(item.GetID())) {
-                        itemDB.addItem(item.GetName(), "0", "0", location.GetID());
+                        itemDB.addItem(item.GetName(), "0", "0", location.GetID().ToString());
                     } else {
-                        itemDB.updateItemName((string)item.GetID(), item.GetName());
+                        itemDB.updateItemName(item.GetID().ToString(), item.GetName());
                     }
                 }
             }

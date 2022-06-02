@@ -47,7 +47,7 @@ namespace DataBank
         public void addItem (string item_name, string x, string y, string storage_id)
         {
             tbl_Item item = new tbl_Item();
-            item.addData(new ItemEntity("NULL", item_name, x, y, room_id));
+            item.addData(new ItemEntity("NULL", item_name, x, y, storage_id));
             item.close();
         }
 
