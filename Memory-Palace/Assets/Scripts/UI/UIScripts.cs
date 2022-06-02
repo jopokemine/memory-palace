@@ -12,23 +12,22 @@ namespace MemoryPalace.UI {
         Request req;
 
         void Start() {
-            req = GameObject.Find("Utilities").GetComponent<Request>();
+            // req = GameObject.Find("Utilities").GetComponent<Request>();
         }
 
         public void LoadScene(string sceneName) {
-            Debug.Log(sceneName);
             SceneManager.LoadScene(sceneName);
         }
 
-        public void Request() {
-            req.PostRequest("http://127.0.0.1:5000/api/v1/postResponse", "{\"Name\":\"Kitchen\"}", ResCallback);
-            // req.GetRequest("http://127.0.0.1:5000/api/v1/textResponse", ResCallback);
+        // public void Request() {
+        //     req.PostRequest("http://127.0.0.1:5000/api/v1/postResponse", "{\"Name\":\"Kitchen\"}", ResCallback);
+        //     // req.GetRequest("http://127.0.0.1:5000/api/v1/textResponse", ResCallback);
 
-            void ResCallback(string data) {
-                Debug.Log($"UIScripts 26: {data}");
-                return;
-            }
-        }
+        //     void ResCallback(string data) {
+        //         Debug.Log($"UIScripts 26: {data}");
+        //         return;
+        //     }
+        // }
     }
 }
 
