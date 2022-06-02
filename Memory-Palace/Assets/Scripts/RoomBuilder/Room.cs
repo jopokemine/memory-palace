@@ -69,13 +69,6 @@ namespace MemoryPalace.RoomBuilder {
             if(_description!=null) this.description = _description;
         }
 
-        public void SetupContextMenuButton() {
-            contextMenuButton.onClick.AddListener(() => {
-                closeContextMenuButton.SetActive(true);
-                contextMenu.SetActive(true);
-            });
-        }
-
         public void UpdatePosition(Vector2 pos) {
             this.position = pos;
             transform.position = pos;
@@ -85,15 +78,6 @@ namespace MemoryPalace.RoomBuilder {
         public void UpdateSize(float _width, float _height) { // Size refers to real world units in metres
             this.height = _height;
             this.width = _width;
-        }
-
-        public void UpdateValues() {
-            // Sets the widths to the new values
-            // the "out" keywords passes a reference to the variables, so they can be set externally as if they're here
-            // using "out" rather than "ref" since it requires assignment
-            this.dimForm.UpdateValues(out width, out height);
-            this.UpdateSize((this.width), (this.height));
-            ResizeUI();
         }
 
         public void UpdateRoomDimensionsText() {
@@ -117,8 +101,32 @@ namespace MemoryPalace.RoomBuilder {
             widthText.GetComponent<Text>().text = $"Width: {this.width}m";
         }
 
+        /*
+        * BUTTON FUNCTIONALITY
+        */
+
+        public void SetupContextMenuButton() {
+            contextMenuButton.onClick.AddListener(() => {
+                closeContextMenuButton.SetActive(true);
+                contextMenu.SetActive(true);
+            });
+        }
+
         public void UpdateDeleteButtonPosition() {
             this.deleteButton.transform.localPosition = new Vector3(0-(dimensions.x*0.5f),0-(dimensions.y*0.5f),0);
+        }
+
+        public void ResizeButton() {
+            // Sets the widths to the new values
+            // the "out" keywords passes a reference to the variables, so they can be set externally as if they're here
+            // using "out" rather than "ref" since it requires assignment
+            this.dimForm.UpdateValues(out width, out height);
+            this.UpdateSize((this.width), (this.height));
+            ResizeUI();
+        }
+
+        public void EditStorageLocationButton() {
+            return;
         }
 
         public override string ToString() {

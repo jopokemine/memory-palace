@@ -3,6 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
+
+// IBM specific
+using IBM.Cloud.SDK;
+using IBM.Cloud.SDK.Utilities;
+using IBM.Cloud.SDK.Authentication;
+using IBM.Cloud.SDK.Authentication.Iam;
+using IBM.Watson.SpeechToText.V1;
+using IBM.Watson.SpeechToText.V1.Model;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 // IBM specific
 using IBM.Cloud.SDK;
@@ -19,18 +31,24 @@ namespace MemoryPalace.TTS {
     [RequireComponent(typeof (AudioSource))]
     public class AudioRecording : MonoBehaviour {
         AudioSource audioSource;
+        public GameObject listeningPopup;
+
+        IEnumerator audioRecordCoroutine;
 
         void Awake() {
             audioSource = gameObject.GetComponent<AudioSource>();
+            audioRecordCoroutine = this.Recording(5f);
         }
         public void StartRecording() {
             audioSource.clip = Microphone.Start("", false, 6, 44100);
-            StartCoroutine(this.Recording(5f));
+            StartCoroutine(audioRecordCoroutine);
+            listeningPopup.SetActive(true);
         }
 
         public void CancelRecording() {
-            StopCoroutine(this.Recording(5f));
-            // this.FinishRecording();
+            StopCoroutine(audioRecordCoroutine);
+            Microphone.End("");
+            audioRecordCoroutine = this.Recording(5f);
         }
 
         IEnumerator Recording(float t) {
@@ -40,12 +58,11 @@ namespace MemoryPalace.TTS {
 
         public void FinishRecording() {
             Microphone.End("");
-            // audioSource.Play();
-            // byte[] audioData = audioSource.GetOutputData();
-            // Debug.Log("Finished Recording / Returned TTS");
 
             ExportClipData(audioSource.clip);
             StartSending();
+            listeningPopup.SetActive(false);
+            audioRecordCoroutine = this.Recording(5f);
         }
 
         // by https://stackoverflow.com/users/982639/alexandru
