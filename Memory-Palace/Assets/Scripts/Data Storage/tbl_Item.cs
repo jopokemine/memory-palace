@@ -99,7 +99,7 @@ namespace DataBank {
 				string query = 
 				"SELECT item_name, storage_name, item_id, storage_id FROM "
 				+ TABLE_NAME
-				+"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
+				+" INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
 				+ TABLE_NAME
 				+".storage_id "
 				+"INNER JOIN tbl_Room on tbl_Room.room_id = "

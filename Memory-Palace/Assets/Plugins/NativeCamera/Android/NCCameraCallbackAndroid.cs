@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:138fae40dad59896b148aa8be85a84d67cc3f6d4d388915daf5632ba8ed9db7b
-size 912
+﻿#if UNITY_EDITOR || UNITY_ANDROID
+using UnityEngine;
+
+namespace NativeCameraNamespace
+{
+	public class NCCameraCallbackAndroid : AndroidJavaProxy
+	{
+		private readonly NativeCamera.CameraCallback callback;
+		private readonly NCCallbackHelper callbackHelper;
+
+		public NCCameraCallbackAndroid( NativeCamera.CameraCallback callback ) : base( "com.yasirkula.unity.NativeCameraMediaReceiver" )
+		{
+			this.callback = callback;
+			callbackHelper = new GameObject( "NCCallbackHelper" ).AddComponent<NCCallbackHelper>();
+		}
+
+		public void OnMediaReceived( string path )
+		{
+			callbackHelper.CallOnMainThread( () => MediaReceiveCallback( path ) );
+		}
+
+		private void MediaReceiveCallback( string path )
+		{
+			if( string.IsNullOrEmpty( path ) )
+				path = null;
+
+			try
+			{
+				if( callback != null )
+					callback( path );
+			}
+			finally
+			{
+				Object.Destroy( callbackHelper.gameObject );
+			}
+		}
+	}
+}
+#endif
