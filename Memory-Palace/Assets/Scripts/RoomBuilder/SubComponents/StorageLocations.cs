@@ -270,7 +270,6 @@ namespace MemoryPalace.RoomBuilder {
             // public void addItem (string item_name, string x, string y, string storage_id)
             // Filter out all of the deleted entries
             foreach(int id in storageIDs) {
-
                 // StorageLocation loc = locations.Where(x => x.GetID() == id) || null;
                 // if(loc != null)
             }
