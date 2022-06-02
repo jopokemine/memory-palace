@@ -8,7 +8,7 @@ namespace MemoryPalace.DataTypes {
         int id;
         string name;
         List<Item> items;
-        public StorageLocation(string _name, int id, List<Item> _items) {
+        public StorageLocation(string _name, List<Item> _items, int _id = -1) {
             this.id = _id;
             this.name = _name;
             this.items = _items;
