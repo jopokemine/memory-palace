@@ -9,7 +9,7 @@ namespace MemoryPalace.Tracking
 {
     public class Tracking : MonoBehaviour {
 
-        Bluetooth BT;
+        public Bluetooth BT;
         Items itemDb;
         // Start is called before the first frame update
         void Start() {
