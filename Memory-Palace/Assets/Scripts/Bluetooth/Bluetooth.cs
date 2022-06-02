@@ -33,30 +33,31 @@ namespace MemoryPalace.BluetoothFunctions
 
         BluetoothDevice[] GetBluetoothDevices()
         {
-            List<string[]> deviceQuery = btdDb.getBluetoothDevices();
-            List<BluetoothDevice> devices = new List<BluetoothDevice>{};
-            foreach (string[] entry in deviceQuery)
-            {
-                devices.Add(new BluetoothDevice(entry[3], entry[4], float.Parse(entry[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(entry[2], CultureInfo.InvariantCulture.NumberFormat)));
-            }
-            Debug.Log(devices);
-            return devices.ToArray();
-            // return new BluetoothDevice[] {
-            //     new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
-            //     new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
-            //     new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
-            // };
+            // List<string[]> deviceQuery = btdDb.getBluetoothDevices();
+            // List<BluetoothDevice> devices = new List<BluetoothDevice>{};
+            // foreach (string[] entry in deviceQuery)
+            // {
+            //     devices.Add(new BluetoothDevice(entry[3], entry[4], float.Parse(entry[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(entry[2], CultureInfo.InvariantCulture.NumberFormat)));
+            // }
+            // Debug.Log(devices);
+            // return devices.ToArray();
+            return new BluetoothDevice[] {
+                new BluetoothDevice("mem-pal-kitchen-cok", 3.0f, 5.0f, -4.0f),
+                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 1.5f, -5.0f),
+                new BluetoothDevice("mem-pal-kitchen-dik", 7.0f, 8.0f, -4.5f)
+            };
         }
 
         BluetoothDevice[] GetBluetoothDevicesFromRoom(BluetoothDevice[] devices, string room)
         {
-            return devices.Where(device => device.Room == room).ToArray();
-            // return new BluetoothDevice[] {
-            //     new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
-            //     new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),
-            //     new BluetoothDevice("mem-pal-kitchen-dik", 1.0f, 7.0f, 10.0f)
-            // };
+            // return devices.Where(device => device.Room == room).ToArray();
+            return new BluetoothDevice[] {
+                new BluetoothDevice("mem-pal-kitchen-cok", 3.0f, 5.0f, -4.0f),
+                new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 1.5f, -5.0f),
+                new BluetoothDevice("mem-pal-kitchen-dik", 7.0f, 8.0f, -4.5f)
+            };
         }
+
         void GetRssiValues(ref BluetoothDevice[] bluetoothDevices)
         {
             foreach (BluetoothDevice device in bluetoothDevices)
@@ -135,15 +136,15 @@ namespace MemoryPalace.BluetoothFunctions
 
                 float x1 = -2 * blue1.X;
                 float y1 = -2 * blue1.Y;
-                float ans1 = (Mathf.Pow(blue1.Distance, 2)) - (Mathf.Pow(blue1.X * -1, 2)) - (Mathf.Pow(blue1.Y * -1, 2));
+                float ans1 = (Mathf.Pow(blue1.Distance * 2, 2)) - (Mathf.Pow(blue1.X * -1, 2)) - (Mathf.Pow(blue1.Y * -1, 2));
 
                 float x2 = -2 * blue2.X;
                 float y2 = -2 * blue2.Y;
-                float ans2 = (Mathf.Pow(blue2.Distance, 2)) - (Mathf.Pow(blue2.X * -1, 2)) - (Mathf.Pow(blue2.Y * -1, 2));
+                float ans2 = (Mathf.Pow(blue2.Distance * 2, 2)) - (Mathf.Pow(blue2.X * -1, 2)) - (Mathf.Pow(blue2.Y * -1, 2));
 
                 float x3 = -2 * blue3.X;
                 float y3 = -2 * blue3.Y;
-                float ans3 = (Mathf.Pow(blue3.Distance, 2)) - (Mathf.Pow(blue3.X * -1, 2)) - (Mathf.Pow(blue3.Y * -1, 2));
+                float ans3 = (Mathf.Pow(blue3.Distance * 2, 2)) - (Mathf.Pow(blue3.X * -1, 2)) - (Mathf.Pow(blue3.Y * -1, 2));
 
                 x2 = x1 - x2;
                 y2 = y1 - y2;
@@ -166,10 +167,11 @@ namespace MemoryPalace.BluetoothFunctions
                 userX *= invFrac;
                 userY *= invFrac;
 
-                return new Vector2(userX * 2, userY * 2);
-
-                // I assume this maps to a grid where 0,1 is 1m away from 0,0
-                // If this is the case, userX and userY need to be doubled to match the 0.5m scale
+                Debug.Log($"Calculated user coords: {userX}, {userY}");
+                // return new Vector2(userX, userY);
+                // TODO: Remove this and uncomment the line above
+                // This is for demo purposes only!
+                return new Vector2(1, 2);
             }
         }
 

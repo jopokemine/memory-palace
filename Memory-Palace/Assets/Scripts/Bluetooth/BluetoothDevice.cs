@@ -12,6 +12,7 @@ namespace MemoryPalace.BluetoothFunctions
         public BluetoothDevice(string deviceName, float x, float y, float rssi)
         {
             this.deviceName = deviceName;
+            this.room = this.deviceName.Split('-')[2];
             this.x = x;
             this.y = y;
             this.rssi = rssi;
@@ -37,6 +38,7 @@ namespace MemoryPalace.BluetoothFunctions
         public BluetoothDevice(string deviceName, float x, float y)
         {
             this.deviceName = deviceName;
+            this.room = this.deviceName.Split('-')[2];
             this.x = x;
             this.y = y;
             this.rssi = float.NaN;
@@ -102,9 +104,9 @@ namespace MemoryPalace.BluetoothFunctions
         {
             get
             {
-                // TODO: Figure out how to turn rssi val to distance
-                float measuredPower = -69; // TODO: Find out actual power
-                int N = 2; // TODO: Find out actual value (environmental factor)
+                float measuredPower = -1; // TODO: Find out actual power
+                int N = 2;
+                Debug.Log($"Distance for {deviceName} with rssi = {rssi}: {Mathf.Pow(10, (measuredPower - rssi) / (10 * N))}");
                 return Mathf.Pow(10, (measuredPower - rssi) / (10 * N));
             }
         }

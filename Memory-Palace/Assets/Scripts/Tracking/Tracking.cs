@@ -19,8 +19,8 @@ namespace MemoryPalace.Tracking
 
         public string GetItemRoom(string itemName)
         {
-            return itemDb.getItemRoom(itemName);
-            // return "kitchen";
+            // return itemDb.getItemRoom(itemName);
+            return "kitchen";
         }
 
         // public bool ItemUserInSameRoom(string itemName)
@@ -30,14 +30,13 @@ namespace MemoryPalace.Tracking
 
         public Vector2 GetItemLocation(string itemName)
         {
-            return itemDb.getItemPos(itemName);
-            // return new Vector2(5, 5);
+            // return itemDb.getItemPos(itemName);
+            return new Vector2(5, 5);
         }
 
-        public float GetAngleDegsToItem(string itemName)
+        public float GetAngleDegsToItem(string itemName, Vector2 userPos)
         {
             Vector2 itemPos = GetItemLocation(itemName);
-            Vector2 userPos = BT.GetUserPos().Value;
             Vector2 diff = CG.DistanceVector2(itemPos, userPos);
             float adj = diff.x;
             float hyp = Mathf.Sqrt(Mathf.Pow(diff.x, 2) + Mathf.Pow(diff.y, 2));
@@ -64,8 +63,10 @@ namespace MemoryPalace.Tracking
             Vector2 userPos = userInfo.Value;
             Vector2 itemPos = GetItemLocation(itemName);
             Debug.Log($"Item location, x: {itemPos.x}, y: {itemPos.y}");
-            float angleToItem = GetAngleDegsToItem(itemName);
+            float angleToItem = GetAngleDegsToItem(itemName, userPos);
             Debug.Log($"angleToItem: {angleToItem}");
+
+            // TODO: Adjust angle of arrow here
 
             // TODO: Implement way to find users orientation against magnetic north
             // float roomAngleFromMagneticNorth = GetRoomMagneticNorthAngle();
