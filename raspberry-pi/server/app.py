@@ -15,7 +15,7 @@ def average(lst: list) -> float:
     return sum(lst) / len(lst)
 
 
-@app.route('/bluetooth/rssi', methods=['GET'])
+@app.route('/api/v1/bluetooth/rssi', methods=['GET'])
 def get_bluetooth_rssi() -> object:
     """Receive a HTTP get request, find the rssi for the mac address provided, and return the rssi value
 
@@ -33,7 +33,8 @@ def get_bluetooth_rssi() -> object:
     rssi = "not in range" if rssi_vals.count(
         "not in range") >= 3 else average([val for val in rssi_vals if val != "not in range"])
 
-    return jsonify(name=f"mem_pal_{ROOM}_{UNIQUE_IDENTIFIER}", rssi=rssi)
+    # return jsonify(name=f"mem-pal-{ROOM}-{UNIQUE_IDENTIFIER}", rssi=rssi)
+    return str(rssi)
 
 
 if __name__ == '__main__':

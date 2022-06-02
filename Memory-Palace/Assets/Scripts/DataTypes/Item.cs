@@ -7,15 +7,15 @@ namespace MemoryPalace.DataTypes {
         string itemDescription {get; set;}
         Vector2 itemLocation {get; set;}
 
-        public Item(string _name, int _id, float _x = 0, float _y = 0, string _description = "") {
-            this.id = _id
+        public Item(string _name, int _id = -1, float _x = 0, float _y = 0, string _description = "") {
+            this.id = _id;
             this.itemName = _name;
             this.itemDescription = _description;
             this.itemLocation = new Vector2(_x, _y);
         }
 
         public Item(Item item, string _name = null, string _description = null) {
-            this.id = _id;
+            this.id = item.GetID();
             this.itemName = item.GetName();
             this.itemDescription = item.GetDescription();
             this.itemLocation = item.GetLocation();

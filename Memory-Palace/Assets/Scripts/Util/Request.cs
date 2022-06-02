@@ -11,10 +11,27 @@ namespace MemoryPalace.Util {
             StartCoroutine(ReqCoroutine(req, callback));
         }
 
+        // public T GetRequest<T>(string url, Func<string, T> callback) {
+        //     UnityWebRequest req = UnityWebRequest.Get(url);
+
+        //     return StartCoroutine(ReqCoroutine(req, callback));
+        // }
+
         public void PostRequest(string url, string body, Action<string> callback) { // Create New
             UnityWebRequest req = UnityWebRequest.Post(url, body);
             StartCoroutine(ReqCoroutine(req, callback));
         }
+
+        // IEnumerator ReqCoroutine<T>(UnityWebRequest req, Func<string, T> callback = null) {
+        //     // req.SetRequestHeader("Content-Type", "application/json");
+        //     yield return req.SendWebRequest();
+
+        //     if(req.result != UnityWebRequest.Result.Success) {
+        //         Debug.Log(req.error);
+        //     } else {
+        //         if(callback != null) callback(req.downloadHandler.text);
+        //     }
+        // }
 
         IEnumerator ReqCoroutine(UnityWebRequest req, Action<string> callback = null) {
             // req.SetRequestHeader("Content-Type", "application/json");
