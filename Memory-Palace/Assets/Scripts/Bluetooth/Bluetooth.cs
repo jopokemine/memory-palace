@@ -13,10 +13,11 @@ namespace MemoryPalace.BluetoothFunctions
     public class Bluetooth : MonoBehaviour
     {
         Request req;
+        BluetoothDevices btdDb;
         // Start is called before the first frame update
         void Start()
         {
-            BluetoothDevices btd = new BluetoothDevices();
+            btdDb = new BluetoothDevices();
             req = GameObject.Find("Requests").GetComponent<Request>();
         }
 
@@ -32,7 +33,7 @@ namespace MemoryPalace.BluetoothFunctions
 
         BluetoothDevice[] GetBluetoothDevices()
         {
-            List<string[]> deviceQuery = btd.getBluetoothDevices();
+            List<string[]> deviceQuery = btdDb.getBluetoothDevices();
             BluetoothDevice[] devices = new BluetoothDevice[]{};
             foreach (string[] entry in deviceQuery)
             {
@@ -164,7 +165,7 @@ namespace MemoryPalace.BluetoothFunctions
                 userX *= invFrac;
                 userY *= invFrac;
 
-                return new Vector2(userX, userY);
+                return new Vector2(userX * 2, userY * 2);
 
                 // I assume this maps to a grid where 0,1 is 1m away from 0,0
                 // If this is the case, userX and userY need to be doubled to match the 0.5m scale
