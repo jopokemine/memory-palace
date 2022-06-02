@@ -21,6 +21,7 @@ namespace MemoryPalace.RoomBuilder {
         public InputField roomDataName;
         public InputField roomDataDescription;
         public GameObject dragPrompt;
+        public GameObject inputErrorMessage;
 
         // Start is called before the first frame update
         void Start() {
@@ -52,8 +53,15 @@ namespace MemoryPalace.RoomBuilder {
             }
         }
 
-        public void EnableDragToMakeRoom() {
-            Invoke("CanCreateDragTrue", 0.25f);
+        public void CheckNameInput() {
+            if(!string.IsNullOrEmpty(roomDataName.textComponent.text)) {
+                roomDataName.transform.parent.gameObject.SetActive(false);
+                dragPrompt.SetActive(true);
+                inputErrorMessage.SetActive(false);
+                Invoke("CanCreateDragTrue", 0.25f);
+            } else {
+                inputErrorMessage.SetActive(true);
+            }
         }
 
         void CanCreateDragTrue() {
