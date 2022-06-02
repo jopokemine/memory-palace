@@ -18,7 +18,9 @@ namespace DataBank
 		    {
                 string[] entity = {
                     reader[0].ToString(), 
-                    reader[1].ToString()
+                    reader[1].ToString(),
+                    reader[2].ToString(),
+                    reader[3].ToString() 
                 };
                 myList.Add(entity);
 		    }
@@ -41,7 +43,6 @@ namespace DataBank
             item.close();
             return myList;
         }
-
 
         public void addItem (string item_name, string x, string y, string storage_id)
         {
