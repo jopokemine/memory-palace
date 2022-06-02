@@ -16,6 +16,17 @@ using IBM.Watson.SpeechToText.V1.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
+// IBM specific
+using IBM.Cloud.SDK;
+using IBM.Cloud.SDK.Utilities;
+using IBM.Cloud.SDK.Authentication;
+using IBM.Cloud.SDK.Authentication.Iam;
+using IBM.Watson.SpeechToText.V1;
+using IBM.Watson.SpeechToText.V1.Model;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace MemoryPalace.TTS {
     [RequireComponent(typeof (AudioSource))]
     public class AudioRecording : MonoBehaviour {
