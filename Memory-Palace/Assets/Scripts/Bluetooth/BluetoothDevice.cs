@@ -26,6 +26,14 @@ namespace MemoryPalace.BluetoothFunctions
             this.rssi = rssi;
         }
 
+        public BluetoothDevice(string deviceName, string roomName, float x, float y)
+        {
+            this.deviceName = deviceName;
+            this.room = roomName;
+            this.x = x;
+            this.y = y;
+        }
+
         public BluetoothDevice(string deviceName, float x, float y)
         {
             this.deviceName = deviceName;

@@ -34,12 +34,13 @@ namespace MemoryPalace.BluetoothFunctions
         BluetoothDevice[] GetBluetoothDevices()
         {
             List<string[]> deviceQuery = btdDb.getBluetoothDevices();
-            BluetoothDevice[] devices = new BluetoothDevice[]{};
+            List<BluetoothDevice> devices = new List<BluetoothDevice>{};
             foreach (string[] entry in deviceQuery)
             {
-                BluetoothDevice.Add(new BluetoothDevice(entry[3], entry[4], (float)entry[1], (float)entry[2]))
+                devices.Add(new BluetoothDevice(entry[3], entry[4], float.Parse(entry[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(entry[2], CultureInfo.InvariantCulture.NumberFormat)));
             }
-            return devices;
+            Debug.Log(devices);
+            return devices.ToArray();
             // return new BluetoothDevice[] {
             //     new BluetoothDevice("mem-pal-kitchen-cok", 2.0f, 5.0f, 1.6f),
             //     new BluetoothDevice("mem-pal-kitchen-suc", 5.0f, 5.0f, 2.4f),

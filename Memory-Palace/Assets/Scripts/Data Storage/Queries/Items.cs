@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 
 namespace DataBank
@@ -68,17 +69,17 @@ namespace DataBank
             System.Data.IDataReader reader = item.getItemRoom(itemName);
 
             int fieldCount = reader.FieldCount;
-		    List<string> myList = new List<string>();
+		    List<string[]> myList = new List<string[]>();
 		    while (reader.Read())
 		    {
                 string[] entity = {
                     reader[0].ToString(),
                     reader[1].ToString()
-                }
+                };
                 myList.Add(entity);
 		    }
             item.close();
-            return new Vector2(myList[0][0], myList[0][1]); // Should only return 1 entity
+            return new Vector2(float.Parse(myList[0][0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(myList[0][1], CultureInfo.InvariantCulture.NumberFormat)); // Should only return 1 entity
         }
     }
 }

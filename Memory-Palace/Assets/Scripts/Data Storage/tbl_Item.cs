@@ -133,6 +133,9 @@ namespace DataBank {
 				"INNER JOIN tbl_Room on tbl_Room.room_id = " +
 				"tbl_Storage_Location.room_id " +
 				"WHERE item_name = " + itemName + ";";
+
+				dbcmd.CommandText = query;
+				return dbcmd.ExecuteReader();
 			}
 
 			public IDataReader getItemPos(string itemName)
@@ -145,6 +148,9 @@ namespace DataBank {
 				TABLE_NAME +
 				".storage_id " +
 				"WHERE item_name = " + itemName + ";";
+
+				dbcmd.CommandText = query;
+				return dbcmd.ExecuteReader();
 			}
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
