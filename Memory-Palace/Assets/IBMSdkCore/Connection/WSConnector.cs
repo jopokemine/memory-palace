@@ -20,6 +20,7 @@
 
 using IBM.Cloud.SDK.Logging;
 using IBM.Cloud.SDK.Utilities;
+using IBMUtility = IBM.Cloud.SDK.Utilities.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Authentication;
@@ -165,7 +166,7 @@ namespace IBM.Cloud.SDK.Connection
             {
                Headers = new Dictionary<string,string>();;
             }
-            Headers.Add(AUTHENTICATION_AUTHORIZATION_HEADER, Utility.CreateAuthorization(username, password));
+            Headers.Add(AUTHENTICATION_AUTHORIZATION_HEADER, IBMUtility.CreateAuthorization(username, password));
         }
         #endregion
 
@@ -339,7 +340,7 @@ namespace IBM.Cloud.SDK.Connection
                 throw new ArgumentNullException("The serviceUrl must not be empty or null.");
             }
 
-            if (Utility.HasBadFirstOrLastCharacter(serviceUrl))
+            if (IBMUtility.HasBadFirstOrLastCharacter(serviceUrl))
             {
                 throw new ArgumentException("The serviceUrl property is invalid. Please remove any surrounding {{, }}, or \" characters.");
             }
