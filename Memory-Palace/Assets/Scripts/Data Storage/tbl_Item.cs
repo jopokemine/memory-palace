@@ -103,7 +103,8 @@ namespace DataBank {
 				+ TABLE_NAME
 				+".storage_id "
 				+"INNER JOIN tbl_Room on tbl_Room.room_id = "
-				+"tbl_Storage_Location.room_id;";
+				+"tbl_Storage_Location.room_id "
+				+"WHERE tbl_Room.room_name = " + room_name + ";";
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
@@ -119,6 +120,21 @@ namespace DataBank {
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
+			}
+
+			public void updateItemName (string id, string new_name)
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"UPDATE "
+				+ TABLE_NAME
+				+" SET item_name = "
+				+ new_name
+				+" WHERE item_id = "
+				+ id
+				+";";
+				
+				dbcmd.CommandText = query;
 			}
 
 

@@ -93,6 +93,21 @@ namespace DataBank {
             		return base.getAllData(TABLE_NAME);
         	}
 
+			public void updateStorageLocation (string id, string new_name)
+			{
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"UPDATE "
+				+ TABLE_NAME
+				+" SET storage_name = "
+				+ new_name
+				+" WHERE storage_id = "
+				+ id
+				+";";
+				
+				dbcmd.CommandText = query;
+			}
+
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {

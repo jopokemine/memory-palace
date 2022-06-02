@@ -6,10 +6,6 @@ namespace DataBank
 {
     public class Items : MonoBehaviour
     {
-        public Items()
-        {
-            
-        }
 
         public List<string[]> getItemsInRoom (string room_name)
         {
@@ -44,6 +40,20 @@ namespace DataBank
 		    }
             item.close();
             return myList;
+        }
+
+        public void addItem (string item_name, string x, string y, string storage_id)
+        {
+            tbl_Item item = new tbl_Item();
+            item.addData(new ItemEntity("NULL", item_name, x, y, room_id));
+            item.close();
+        }
+
+        public void updateItemName(string id, string new_name)
+        {
+            tbl_Item item = new tbl_Item();
+            item.updateItemName(id,new_name);
+            item.close();
         }
     }
 }
