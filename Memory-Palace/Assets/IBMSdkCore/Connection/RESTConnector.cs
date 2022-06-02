@@ -30,7 +30,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using MiniJSON;
 using IBM.Cloud.SDK.Authentication;
-using Utility = IBM.Cloud.SDK.Utilities.Utility;
+using IBMUtility = IBM.Cloud.SDK.Utilities.Utility;
 
 #if !NETFX_CORE
 using System.Net;
@@ -270,7 +270,7 @@ namespace IBM.Cloud.SDK.Connection
                 throw new ArgumentNullException("The serviceUrl must not be empty or null.");
             }
 
-            if (Utility.HasBadFirstOrLastCharacter(serviceUrl))
+            if (IBMUtility.HasBadFirstOrLastCharacter(serviceUrl))
             {
                 throw new ArgumentException("The serviceUrl property is invalid. Please remove any surrounding {{, }}, or \" characters.");
             }
@@ -340,7 +340,7 @@ namespace IBM.Cloud.SDK.Connection
             {
                Headers = new Dictionary<string,string>();;
             }
-            Headers[AUTHENTICATION_AUTHORIZATION_HEADER] = Utility.CreateAuthorization(username, password);
+            Headers[AUTHENTICATION_AUTHORIZATION_HEADER] = IBMUtility.CreateAuthorization(username, password);
         }
         #endregion
 
