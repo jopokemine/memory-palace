@@ -7,8 +7,6 @@ public class DbTestBehaviour : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		tbl_Room room            = new tbl_Room();
-		tbl_Bluetooth_Device btd = new tbl_Bluetooth_Device();
 		tbl_Room_Door room_door  = new tbl_Room_Door();
 		tbl_Item item            = new tbl_Item();
 		tbl_Storage_Location storage_location = new tbl_Storage_Location();
