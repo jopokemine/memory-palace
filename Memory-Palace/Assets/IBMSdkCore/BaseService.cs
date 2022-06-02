@@ -16,6 +16,7 @@
 */
 
 using IBM.Cloud.SDK.Utilities;
+using IBMUtility = IBM.Cloud.SDK.Utilities.Utility;
 using IBM.Cloud.SDK.Connection;
 using IBM.Cloud.SDK.Authentication;
 using IBM.Cloud.SDK.Authentication.NoAuth;
@@ -74,7 +75,7 @@ namespace IBM.Cloud.SDK
             {
                 throw new ArgumentNullException("The serviceUrl must not be empty or null.");
             }
-            if (Utility.HasBadFirstOrLastCharacter(url))
+            if (IBMUtility.HasBadFirstOrLastCharacter(url))
             {
                 throw new ArgumentException("The serviceUrl property is invalid. Please remove any surrounding {{, }}, or \" characters.");
             }

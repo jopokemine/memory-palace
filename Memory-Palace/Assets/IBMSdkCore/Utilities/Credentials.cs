@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Utility = IBM.Cloud.SDK.Utilities.Utility;
+using IBMUtility = IBM.Cloud.SDK.Utilities.Utility;
 
 namespace IBM.Cloud.SDK
 {
@@ -87,7 +87,7 @@ namespace IBM.Cloud.SDK
             }
             set
             {
-                if (!Utility.HasBadFirstOrLastCharacter(value))
+                if (!IBMUtility.HasBadFirstOrLastCharacter(value))
                 {
                     iamApiKey = value;
                 }

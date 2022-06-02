@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c0e03a786b04d6105eddbb0cc41299d5a7e86fe45b908e6399e989b22538e3ee
-size 528
+﻿#if UNITY_EDITOR || UNITY_ANDROID
+using UnityEngine;
+
+namespace NativeCameraNamespace
+{
+	public class NCCallbackHelper : MonoBehaviour
+	{
+		private System.Action mainThreadAction = null;
+
+		private void Awake()
+		{
+			DontDestroyOnLoad( gameObject );
+		}
+
+		private void Update()
+		{
+			if( mainThreadAction != null )
+			{
+				System.Action temp = mainThreadAction;
+				mainThreadAction = null;
+				temp();
+			}
+		}
+
+		public void CallOnMainThread( System.Action function )
+		{
+			mainThreadAction = function;
+		}
+	}
+}
+#endif

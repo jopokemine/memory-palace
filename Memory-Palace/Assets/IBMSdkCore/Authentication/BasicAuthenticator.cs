@@ -19,7 +19,7 @@ using IBM.Cloud.SDK.Connection;
 using IBM.Cloud.SDK.Utilities;
 using System;
 using System.Collections.Generic;
-using Utility = IBM.Cloud.SDK.Utilities.Utility;
+using IBMUtility = IBM.Cloud.SDK.Utilities.Utility;
 
 namespace IBM.Cloud.SDK.Authentication.BasicAuth
 {
@@ -115,12 +115,12 @@ namespace IBM.Cloud.SDK.Authentication.BasicAuth
                 throw new ArgumentNullException(string.Format(ErrorMessagePropMissing, "Password"));
             }
 
-            if (Utility.HasBadFirstOrLastCharacter(Username))
+            if (IBMUtility.HasBadFirstOrLastCharacter(Username))
             {
                 throw new ArgumentException(string.Format(ErrorMessagePropInvalid, "Username"));
             }
 
-            if (Utility.HasBadFirstOrLastCharacter(Password))
+            if (IBMUtility.HasBadFirstOrLastCharacter(Password))
             {
                 throw new ArgumentException(string.Format(ErrorMessagePropInvalid, "Password"));
             }
