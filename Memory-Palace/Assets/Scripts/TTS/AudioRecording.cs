@@ -24,12 +24,15 @@ namespace MemoryPalace.TTS {
     public class AudioRecording : MonoBehaviour {
         AudioSource audioSource;
         public GameObject listeningPopup;
+        public GameObject queryPopup;
+        Text queryText;
 
         IEnumerator audioRecordCoroutine;
 
         void Awake() {
             audioSource = gameObject.GetComponent<AudioSource>();
             audioRecordCoroutine = this.Recording(5f);
+            queryText = queryPopup.transform.GetChild(1).GetComponent<Text>();
         }
 
         public void StartRecording() {
@@ -147,6 +150,8 @@ namespace MemoryPalace.TTS {
             int wordIndex = CheckWords(splitTranscript, allItemNames);
             if(wordIndex > -1) { // Word exists as item name
                 Vector2 itemPos = itemDB.getItemPos(allItemNames[wordIndex]);
+                queryPopup.SetActive(true);
+                queryText.text = $"Query: \"{data}\"";
                 Debug.Log(itemPos);
                 return;
             }
