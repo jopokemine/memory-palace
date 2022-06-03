@@ -97,14 +97,14 @@ namespace DataBank {
 			{
 				IDbCommand dbcmd = getDbCommand();
 				string query = 
-				"SELECT item_name, storage_name, item_id, storage_id FROM "
+				"SELECT item_name, storage_name, item_id, tbl_item.storage_id FROM "
 				+ TABLE_NAME
 				+" INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = "
 				+ TABLE_NAME
 				+".storage_id "
 				+"INNER JOIN tbl_Room on tbl_Room.room_id = "
 				+"tbl_Storage_Location.room_id "
-				+"WHERE tbl_Room.room_name = " + room_name + ";";
+				+"WHERE tbl_Room.room_name = '" + room_name + "';";
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
