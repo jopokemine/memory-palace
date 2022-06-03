@@ -128,12 +128,12 @@ namespace DataBank {
 				string query = 
 				"SELECT room_name FROM " +
 				TABLE_NAME +
-				"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = " +
+				" INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = " +
 				TABLE_NAME +
 				".storage_id " +
 				"INNER JOIN tbl_Room on tbl_Room.room_id = " +
 				"tbl_Storage_Location.room_id " +
-				"WHERE item_name = " + itemName + ";";
+				"WHERE item_name = '" + itemName + "';";
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
@@ -145,10 +145,10 @@ namespace DataBank {
 				string query = 
 				"SELECT tbl_Storage_Location.pos_x, tbl_Storage_Location.pos_y FROM " +
 				TABLE_NAME +
-				"INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = " +
+				" INNER JOIN tbl_Storage_Location on tbl_Storage_Location.storage_id = " +
 				TABLE_NAME +
 				".storage_id " +
-				"WHERE item_name = " + itemName + ";";
+				"WHERE item_name = '" + itemName + "';";
 
 				dbcmd.CommandText = query;
 				return dbcmd.ExecuteReader();
