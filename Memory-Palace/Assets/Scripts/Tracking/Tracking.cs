@@ -7,14 +7,20 @@ using CG = MemoryPalace.Util.CoordinateGeometry;
 
 namespace MemoryPalace.Tracking
 {
-    public class Tracking : MonoBehaviour {
+    public class Tracking : MonoBehaviour
+    {
 
         public Bluetooth BT;
+        GameObject cursor;
         Items itemDb;
         // Start is called before the first frame update
         void Start() {
             itemDb = new Items();
             BT = GameObject.Find("Bluetooth").GetComponent<Bluetooth>();
+            cursor = GameObject.Find("cursor");
+            cursor.GetComponent<Renderer>().enabled = false;
+            // float angle = DirectUserToItem("item");
+            // transform.Rotate(angle, 0f, 0f, Space.Self);
         }
 
         public string GetItemRoom(string itemName)
@@ -65,6 +71,9 @@ namespace MemoryPalace.Tracking
             Debug.Log($"Item location, x: {itemPos.x}, y: {itemPos.y}");
             float angleToItem = GetAngleDegsToItem(itemName, userPos);
             Debug.Log($"angleToItem: {angleToItem}");
+            cursor.GetComponent<Renderer>().enabled = true;
+            cursor.transform.Rotate(angleToItem, 0f, 0f, Space.Self);
+            // return angleToItem;
 
             // TODO: Adjust angle of arrow here
 
@@ -82,7 +91,8 @@ namespace MemoryPalace.Tracking
 
         // Update is called once per frame
         void Update() {
-        
+            // float rotationTime = 180f;
+		    // transform.Rotate(Vector3.right * (rotationTime * Time.deltaTime));
         }
     }
 }
