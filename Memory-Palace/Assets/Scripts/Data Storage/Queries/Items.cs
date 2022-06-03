@@ -77,7 +77,9 @@ namespace DataBank
                 myList.Add(entity);
 		    }
             item.close();
-            return new Vector2(float.Parse(myList[0][0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(myList[0][1], CultureInfo.InvariantCulture.NumberFormat)); // Should only return 1 entity
+            return new Vector2(float.Parse(myList[0][0], CultureInfo.InvariantCulture.NumberFormat), float.Parse(myList[0][1], CultureInfo.InvariantCulture.NumberFormat));
+        }
+         // Should only return 1 entity
         public void addItem (string item_name, string x, string y, string storage_id)
         {
             tbl_Item item = new tbl_Item();
