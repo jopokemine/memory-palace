@@ -18,6 +18,7 @@ namespace MemoryPalace.RoomBuilder {
         List<StorageLocation> locations = new List<StorageLocation>();
         List<int> storageIDs;
         List<int> itemIDs;
+        List<int> deletedItemIDs; // This is to prevent errors
         // Intermediary so we can get the itemName and itemDescription
         GameObject storageInformation;
         InputField storageName;

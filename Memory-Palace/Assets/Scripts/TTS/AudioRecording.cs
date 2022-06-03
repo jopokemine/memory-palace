@@ -5,16 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-// IBM specific
-using IBM.Cloud.SDK;
-using IBM.Cloud.SDK.Utilities;
-using IBM.Cloud.SDK.Authentication;
-using IBM.Cloud.SDK.Authentication.Iam;
-using IBM.Watson.SpeechToText.V1;
-using IBM.Watson.SpeechToText.V1.Model;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using ItemDB = DataBank.Items;
 
 // IBM specific
 using IBM.Cloud.SDK;
@@ -26,6 +17,7 @@ using IBM.Watson.SpeechToText.V1.Model;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
 
 namespace MemoryPalace.TTS {
     [RequireComponent(typeof (AudioSource))]
@@ -39,6 +31,7 @@ namespace MemoryPalace.TTS {
             audioSource = gameObject.GetComponent<AudioSource>();
             audioRecordCoroutine = this.Recording(5f);
         }
+
         public void StartRecording() {
             audioSource.clip = Microphone.Start("", false, 6, 44100);
             StartCoroutine(audioRecordCoroutine);
@@ -143,10 +136,38 @@ namespace MemoryPalace.TTS {
 
         public void StartSending() {
             StartCoroutine(SendToWatson(ResCallback));
-
-            void ResCallback(string data) {
-                Debug.Log($"Transcript: {data}");
+        }
+        
+        void ResCallback(string data) {
+            Debug.Log("here");
+            Debug.Log($"Transcript: {data}");
+            string[] splitTranscript = data.Split(' ');
+            ItemDB itemDB = new ItemDB();
+            List<string> allItemNames = itemDB.getItems();
+            int wordIndex = CheckWords(splitTranscript, allItemNames);
+            if(wordIndex > -1) { // Word exists as item name
+                Vector2 itemPos = itemDB.getItemPos(allItemNames[wordIndex]);
+                Debug.Log(itemPos);
                 return;
+            }
+            Debug.Log("Couldn't find it");
+            return;
+            // if(!string.IsNullOrEmpty(foundWord)) {
+            //     Debug.Log(foundWord);
+            //     return;
+            // }
+            // Debug.Log("couldn't find it");
+            // return;
+
+            int CheckWords(string[] splitTranscript, List<string> allItemNames) {
+                foreach(string word in splitTranscript) {
+                    for(int i=0; i<allItemNames.Count; i++) {
+                        if(word.ToLower() == allItemNames[i].ToLower()) {
+                            return i;
+                        }
+                    }
+                }
+                return -1;
             }
         }
 
@@ -186,6 +207,7 @@ namespace MemoryPalace.TTS {
             var parsedData = JObject.Parse(JsonConvert.SerializeObject(recognizeResponse));
 
             if(callback != null) callback((string)parsedData["results"][0]["alternatives"][0]["transcript"]);
+            // callback?.Invoke(etc..);
 
             // Debug.Log(parsedData["results"][0]["alternatives"][0]["transcript"]);
         }
