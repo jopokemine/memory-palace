@@ -7,14 +7,24 @@ using CG = MemoryPalace.Util.CoordinateGeometry;
 
 namespace MemoryPalace.Tracking
 {
-    public class Tracking : MonoBehaviour {
+    public class Tracking : MonoBehaviour
+    {
 
         public Bluetooth BT;
+        GameObject cursor;
         Items itemDb;
+        bool isTracking;
+        float angleToItem;
         // Start is called before the first frame update
         void Start() {
             itemDb = new Items();
             BT = GameObject.Find("Bluetooth").GetComponent<Bluetooth>();
+            cursor = GameObject.Find("cursor");
+            cursor.GetComponent<Renderer>().enabled = false;
+            isTracking = false;
+            angleToItem = 0f;
+            // float angle = DirectUserToItem("item");
+            // transform.Rotate(angle, 0f, 0f, Space.Self);
         }
 
         public string GetItemRoom(string itemName)
@@ -63,8 +73,12 @@ namespace MemoryPalace.Tracking
             Vector2 userPos = userInfo.Value;
             Vector2 itemPos = GetItemLocation(itemName);
             Debug.Log($"Item location, x: {itemPos.x}, y: {itemPos.y}");
-            float angleToItem = GetAngleDegsToItem(itemName, userPos);
+            angleToItem = GetAngleDegsToItem(itemName, userPos);
             Debug.Log($"angleToItem: {angleToItem}");
+            cursor.GetComponent<Renderer>().enabled = true;
+            cursor.transform.Rotate(angleToItem, 0f, 0f, Space.Self);
+            isTracking = true;
+            // return angleToItem;
 
             // TODO: Adjust angle of arrow here
 
@@ -82,7 +96,11 @@ namespace MemoryPalace.Tracking
 
         // Update is called once per frame
         void Update() {
-        
+            Quaternion userAngleFromMagneticNorth = Quaternion.Euler(0, -Input.compass.magneticHeading, 0);
+            if (isTracking)
+            {
+                cursor.transform.Rotate(-userAngleFromMagneticNorth.x, 0f, 0f, Space.Self);
+            }
         }
     }
 }
