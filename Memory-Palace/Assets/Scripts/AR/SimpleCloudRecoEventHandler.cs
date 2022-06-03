@@ -6,6 +6,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
     CloudRecoBehaviour mCloudRecoBehaviour;
     bool mIsScanning = false;
     string mTargetMetadata = "";
+    GameObject cursor;
 
     public ImageTargetBehaviour ImageTargetTemplate;
 
@@ -18,6 +19,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         mCloudRecoBehaviour.RegisterOnUpdateErrorEventHandler(OnUpdateError);
         mCloudRecoBehaviour.RegisterOnStateChangedEventHandler(OnStateChanged);
         mCloudRecoBehaviour.RegisterOnNewSearchResultEventHandler(OnNewSearchResult);
+        cursor = GameObject.Find("cursor");
     }
     //Unregister cloud reco callbacks when the handler is destroyed
     void OnDestroy()
@@ -61,6 +63,7 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         // Build augmentation based on target 
         if (ImageTargetTemplate)
         {
+            cursor.GetComponent<Renderer>().enabled = false;
             /* Enable the new result with the same ImageTargetBehaviour: */
             mCloudRecoBehaviour.EnableTracking(cloudRecoSearchResult, ImageTargetTemplate.gameObject);
         }
@@ -72,19 +75,19 @@ public class SimpleCloudRecoEventHandler : MonoBehaviour
         mCloudRecoBehaviour.enabled = false;
     }
 
-      void OnGUI() {
-      // Display current 'scanning' status
-      GUI.Box (new Rect(100,100,200,50), mIsScanning ? "Scanning" : "Not scanning");
-      // Display metadata of latest detected cloud-target
-      GUI.Box (new Rect(100,200,200,50), "Metadata: " + mTargetMetadata);
-      // If not scanning, show button
-      // so that user can restart cloud scanning
-      if (!mIsScanning) {
-          if (GUI.Button(new Rect(100,300,200,50), "Restart Scanning")) {
-          // Reset Behaviour
-          mCloudRecoBehaviour.enabled = true;
-          mTargetMetadata="";
-          }
-      }
-  }
+//       void OnGUI() {
+//       // Display current 'scanning' status
+//       GUI.Box (new Rect(100,100,200,50), mIsScanning ? "Scanning" : "Not scanning");
+//       // Display metadata of latest detected cloud-target
+//       GUI.Box (new Rect(100,200,200,50), "Metadata: " + mTargetMetadata);
+//       // If not scanning, show button
+//       // so that user can restart cloud scanning
+//       if (!mIsScanning) {
+//           if (GUI.Button(new Rect(100,300,200,50), "Restart Scanning")) {
+//           // Reset Behaviour
+//           mCloudRecoBehaviour.enabled = true;
+//           mTargetMetadata="";
+//           }
+//       }
+//   }
 }
