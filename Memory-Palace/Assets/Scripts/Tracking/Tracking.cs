@@ -100,16 +100,7 @@ namespace MemoryPalace.Tracking
             if (isTracking)
             {
                 cursor.transform.Rotate(-userAngleFromMagneticNorth.x, 0f, 0f, Space.Self);
-                // Vector3 rotation = userAngleFromMagneticNorth.ToEulerAngles();
-                // userAngleFromMagneticNorth.x += cursor.transform.rotation.x + angleToItem;
-                // userAngleFromMagneticNorth.y = cursor.transform.rotation.y;
-                // userAngleFromMagneticNorth.z = cursor.transform.rotation.z;
-                // Debug.Log(userAngleFromMagneticNorth);
-                // cursor.transform.rotation = userAngleFromMagneticNorth;
             }
-            // Debug.Log(userAngleFromMagneticNorth);
-            // float rotationTime = 180f;
-		    // transform.Rotate(Vector3.right * (rotationTime * Time.deltaTime));
         }
     }
 }
