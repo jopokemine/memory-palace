@@ -64,7 +64,7 @@ namespace DataBank
         public Vector2 getItemPos(string itemName)
         {
             tbl_Item item = new tbl_Item();
-            System.Data.IDataReader reader = item.getItemRoom(itemName);
+            System.Data.IDataReader reader = item.getItemPos(itemName);
 
             int fieldCount = reader.FieldCount;
 		    List<string[]> myList = new List<string[]>();
@@ -93,5 +93,11 @@ namespace DataBank
             item.updateItemName(id,new_name);
             item.close();
         }
+
+        // public void deleteItemID(string id) {
+        //     tbl_Item item = new tbl_Item();
+        //     item.deleteDataById(id);
+        //     item.close();
+        // }
     }
 }

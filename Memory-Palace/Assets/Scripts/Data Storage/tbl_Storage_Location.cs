@@ -108,6 +108,16 @@ namespace DataBank {
 				dbcmd.CommandText = query;
 			}
 
+			public void deleteByID(string id) {
+				IDbCommand dbcmd = getDbCommand();
+				string query = 
+				"DELETE FROM "
+				+ TABLE_NAME
+				+ " WHERE storage_id = '"
+				+ id
+				+ "';";
+			}
+
 
         	// public IDataReader getNearestLocation(LocationInfo loc)
         	// {
