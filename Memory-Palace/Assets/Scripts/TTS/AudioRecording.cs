@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 
 using ItemDB = DataBank.Items;
+using Track = MemoryPalace.Tracking.Tracking;
 
 // IBM specific
 using IBM.Cloud.SDK;
@@ -24,12 +25,18 @@ namespace MemoryPalace.TTS {
     public class AudioRecording : MonoBehaviour {
         AudioSource audioSource;
         public GameObject listeningPopup;
+        public GameObject queryPopup;
+        public GameObject tracking;
+        Text queryText;
+        Track track;
 
         IEnumerator audioRecordCoroutine;
 
         void Awake() {
             audioSource = gameObject.GetComponent<AudioSource>();
             audioRecordCoroutine = this.Recording(5f);
+            queryText = queryPopup.transform.GetChild(1).GetComponent<Text>();
+            track = tracking.GetComponent<Track>();
         }
 
         public void StartRecording() {
@@ -146,8 +153,12 @@ namespace MemoryPalace.TTS {
             List<string> allItemNames = itemDB.getItems();
             int wordIndex = CheckWords(splitTranscript, allItemNames);
             if(wordIndex > -1) { // Word exists as item name
-                Vector2 itemPos = itemDB.getItemPos(allItemNames[wordIndex]);
-                Debug.Log(itemPos);
+                // Vector2 itemPos = itemDB.getItemPos(allItemNames[wordIndex]);
+                track.DirectUserToItem(allItemNames[wordIndex]);
+
+                queryPopup.SetActive(true);
+                queryText.text = $"Query: \"{data}\"";
+                // track(allItemNames[wordIndex]);
                 return;
             }
             Debug.Log("Couldn't find it");
