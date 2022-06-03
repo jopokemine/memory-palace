@@ -18,7 +18,7 @@ namespace MemoryPalace.BluetoothFunctions
         void Start()
         {
             btdDb = new BluetoothDevices();
-            req = GameObject.Find("Requests").GetComponent<Request>();
+            req = GameObject.Find("Request").GetComponent<Request>();
         }
 
         public KeyValuePair<string, Vector2> GetUserPos()
